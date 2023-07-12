@@ -14,13 +14,12 @@ export default function DisplayCardInfo({ card }: any) {
       arr.push(
         <div>
           <div>{k[i].toUpperCase()}</div>
-          <div className="flex gap-6 font-semibold">
+          <div className="grid md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 gap-6 mb-6 font-semibold">
             <div>Low: ${p[k[i]]?.low}</div>
             <div>Mid: ${p[k[i]]?.mid}</div>
-            <div>High ${p[k[i]]?.high}</div>
-            <div>Market ${p[k[i]]?.market}</div>
+            <div>High: ${p[k[i]]?.high}</div>
+            <div>Market: ${p[k[i]]?.market}</div>
           </div>
-          <br />
         </div>
       );
     }
