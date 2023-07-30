@@ -6,10 +6,10 @@ export default function NavBar() {
       <Image
         src={"/icon.png"}
         alt="header image"
-        width={200}
+        width={125}
         height={200}
       ></Image>
-      <div className="flex justify-center text-6xl gap-20 p-4">
+      <div className="flex w-full place-content-between justify-center md:text-6xl sm:text-4xl  gap-10 p-4">
         <Link href={"/"}>Home </Link>
         <Link href={"/sets"}>Sets</Link>
       </div>
