@@ -8,7 +8,7 @@ export default function DisplaySetCards({ cards }: any) {
   const [toggleType, setToggleType] = useState("");
   const supertypes: string[] = ["Pokémon", "Trainer", "Energy"];
   const cardsAscending = [...cards].sort((a, b) => a.number - b.number);
-  console.log(Object.values(cards).length)
+  // console.log(Object.values(cards).length)
   function CreateCard(i: any) {
     // console.log("current card", i);
     const CardElement = () => {
@@ -46,7 +46,7 @@ export default function DisplaySetCards({ cards }: any) {
     }
     return arr
   }
-  console.log(Object.values(cardsAscending))
+  // console.log(Object.values(cardsAscending))
   // console.log(toggleType);
   return (
     <div>
