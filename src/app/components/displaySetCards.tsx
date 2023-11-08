@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import Image from "next/image";
 import { useState } from "react";
@@ -20,13 +21,13 @@ export default function DisplaySetCards({ cards }: any) {
           type={i.supertype}
         >
           {i.number}/{i.set.total}
-          <Image
+          <img
             src={`${i.images.small}`}
             alt={"pokemon image"}
             width={300}
             height={100}
             loading="lazy"
-          ></Image>
+          ></img>
         </button>
       );
     };

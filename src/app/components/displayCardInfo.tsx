@@ -1,7 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import Image from "next/image";
 export default function DisplayCardInfo({ card }: any) {
   // console.log(card);
+  console.log(typeof card)
   function GetTCGPlayerPrices() {
     let p = card?.tcgplayer?.prices;
     let k = Object.keys(p);
@@ -70,14 +72,14 @@ export default function DisplayCardInfo({ card }: any) {
     <div className="h-full bg-white text-black py-20 px-10 border-4 border-slate-200">
       <div className="flex gap-10 justify-center">
         <div className="flex items-start">
-          <Image
+          <img
             src={`${card.images.large}`}
             alt={"pokemon image"}
             width={400}
             height={300}
             loading="lazy"
             className={"flex hover:scale-125"}
-          ></Image>
+          ></img>
         </div>
         <div className="">
           {card?.tcgplayer?.prices ? (

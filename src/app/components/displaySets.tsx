@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Link from "next/link";
 export default function DisplaySets({ tcgSets }: any) {
@@ -9,12 +10,12 @@ export default function DisplaySets({ tcgSets }: any) {
           className="flex items-center justify-between gap-2 border-2 border-gray-400 p-4 bg-white text-black"
         >
           <div className="flex-col text-center">
-            <Image
+            <img
               src={`${i.images.logo}`}
               alt={"set"}
               width={150}
               height={150}
-            ></Image>
+            ></img>
             <Link href={`/sets/${i.id}`} className="underline">
               {" "}
               View Cards{" "}

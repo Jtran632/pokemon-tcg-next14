@@ -8,10 +8,15 @@ async function getCard(id: string) {
   const a = await fetch(url);
   return a.json();
 }
-export default async function SetPageWithCardName({ params }: any) {
+type PageProps = {
+  params: {id: string}
+}
+export default async function SetPageWithCardName({ params }: PageProps) {
+  console.log(typeof params)
   // console.log(params);
   let i = await getCard(params.id);
-  // console.log(i.data);
+  console.log(i.data);
+  console.log(typeof i.data)
   return (
     <div>
       <DisplayCardInfo card={i.data} />
