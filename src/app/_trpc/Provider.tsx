@@ -10,7 +10,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
         trpc.createClient({
             links: [
                 httpBatchLink({
-                    url: "https://pokemon-tcg-next13.vercel.app//api/trpc",
+                    url: "https://pokemon-tcg-next13.vercel.app/api/trpc",
                     // url: "http://localhost:3000/api/trpc",
                 })
             ]
