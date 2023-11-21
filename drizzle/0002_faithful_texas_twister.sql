@@ -1,0 +1,1 @@
+ALTER TABLE `favCards` RENAME COLUMN `imageUr` TO `imageUrl`;

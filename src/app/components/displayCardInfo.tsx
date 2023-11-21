@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
-import Image from "next/image";
+'use client'
+import { trpc } from '../_trpc/client'
 export default function DisplayCardInfo({ card }: any) {
-  // console.log(card);
-  console.log(typeof card)
+  const addFav = trpc.addFav.useMutation();
   function GetTCGPlayerPrices() {
     let p = card?.tcgplayer?.prices;
     let k = Object.keys(p);
@@ -71,6 +70,9 @@ export default function DisplayCardInfo({ card }: any) {
   return (
     <div className="h-full bg-white text-black py-20 px-10 border-4 border-slate-200">
       <div className="flex gap-10 justify-center">
+        <button className='text-black border-2 h-10 p-2' onClick={async () => {
+          addFav.mutate(card.images.small)
+        }}> Add Fav </button>
         <div className="flex items-start">
           <img
             src={`${card.images.large}`}
