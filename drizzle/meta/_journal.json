@@ -1,26 +1,12 @@
 {
   "version": "5",
-  "dialect": "sqlite",
+  "dialect": "pg",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1700493327498,
-      "tag": "0000_warm_vampiro",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1700496154526,
-      "tag": "0001_lame_doctor_faustus",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1700497178704,
-      "tag": "0002_faithful_texas_twister",
+      "when": 1700658823814,
+      "tag": "0000_chilly_angel",
       "breakpoints": true
     }
   ]

@@ -1,23 +1,23 @@
-import { drizzle } from "drizzle-orm/better-sqlite3";
-import { migrate } from "drizzle-orm/better-sqlite3/migrator";
-import { eq } from "drizzle-orm";
-import Database from "better-sqlite3";
-import { z } from "zod";
+import { users, favCards } from "@/db/schema";
 import { publicProcedure, router } from "./trpc";
-import { favCards, todos } from "@/db/schema";
-
-const sqlite = new Database("sqlite.db");
-const db = drizzle(sqlite);
+import { drizzle } from "drizzle-orm/postgres-js";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
+import { eq } from "drizzle-orm";
+import postgres from "postgres";
+import { z } from "zod";
+const connectionString = process.env.DATABASE_URL as string;
+const client = postgres(connectionString);
+const db = drizzle(client);
 migrate(db, { migrationsFolder: "drizzle" });
 export const appRouter = router({
   getFavs: publicProcedure.query(async () => {
-    return await db.select().from(favCards).all();
+    return await db.select().from(favCards);
   }),
   addFav: publicProcedure.input(z.string()).mutation(async (opts) => {
-    await db.insert(favCards).values({ imageUrl: opts.input }).run();
+    await db.insert(favCards).values({ imageUrl: opts.input });
   }),
   delFav: publicProcedure.input(z.string()).mutation(async (opts) => {
-    await db.delete(favCards).where(eq(favCards.imageUrl, opts.input)).run();
+    await db.delete(favCards).where(eq(favCards.imageUrl, opts.input));
   }),
 });
 

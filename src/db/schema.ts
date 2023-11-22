@@ -1,12 +1,12 @@
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
 
-export const todos = sqliteTable("todos", {
-  id: integer("id").primaryKey(),
-  content: text("content"),
-  done: integer("done"),
+export const users = pgTable('users', {
+  id: serial('id').primaryKey(),
+  fullName: text('full_name'),
+  phone: varchar('phone', { length: 256 }),
 });
 
-export const favCards = sqliteTable("favCards", {
-  id: integer("id").primaryKey(),
+export const favCards = pgTable("favCards", {
+  id: serial("id").primaryKey(),
   imageUrl: text("imageUrl"),
 });

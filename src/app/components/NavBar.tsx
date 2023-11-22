@@ -5,6 +5,7 @@ export default function NavBar() {
   return (
     <div className="flex items-center justify-between">
       <img
+      className="-rotate-12"
         src={"/icon.png"}
         alt="header image"
         width={125}

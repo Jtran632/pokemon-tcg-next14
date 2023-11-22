@@ -3,23 +3,28 @@
 'use client'
 import { trpc } from '../_trpc/client'
 export default function DisplayFavs() {
-    const getFavs = trpc.getFavs.useQuery();
+    const getFavs = trpc.getFavs.useQuery()
     const delFav = trpc.delFav.useMutation({
         onSettled: () => {
             getFavs.refetch()
         }
     });
+    if (getFavs.status !== 'success') {
+        return <>Loading...</>;
+    }
+    const { data } = getFavs
+    console.log(getFavs)
     return (
         <div className='w-screen h-screen'>
             <div className='flex flex-col justify-center items-center'>
-                <div className='text-center'>Favorites</div>
+                <div className='text-center'>{data.length > 0 ? "Favorites" : "You haven't added any favorites"}</div>
                 <div className='grid grid-cols-3 w-fit gap-10'>
-                    {getFavs?.data?.map((favs) => (
-                        <div className='col-span-1 h-fit w-fit bg-black border-2 flex flex-col items-end' key={favs.id}>
-                            <button className='px-2' onClick={async () => {
+                    {data?.map((favs: any) => (
+                        <div className='col-span-1 h-fit w-fit bg-black border rounded-md flex flex-col items-end' key={favs.id}>
+                            <button className='' onClick={async () => {
                                 delFav.mutate(favs.imageUrl || '')
-                            }}>x</button>
-                            <img src={favs.imageUrl || ''} ></img>
+                            }}>💔</button>
+                            <img className='[22rem] w-[16rem] rounded-md' placeholder='/backCard.png' src={favs.imageUrl || ''} ></img>
                         </div>
                     ))}
                 </div>
