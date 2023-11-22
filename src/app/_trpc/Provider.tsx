@@ -11,7 +11,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
             links: [
                 loggerLink(),
                 httpLink({
-                    url: absoluteUrl("/api/trpc")
+                    url: absoluteUrl()
                 })
             ]
         })

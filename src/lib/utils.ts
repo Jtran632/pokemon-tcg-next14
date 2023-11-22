@@ -1,5 +1,6 @@
-export function absoluteUrl(path: string) {
-  if (typeof window !== "undefined") return path;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}${path}`;
-  return `http://localhost:${process.env.port ?? 3000}${path}`;
+export function absoluteUrl() {
+  if (typeof window !== "undefined") return "/api/trpc";
+  if (process.env.VERCEL_URL)
+    return `https://${process.env.VERCEL_URL}/api/trpc`;
+  return `http://localhost:${process.env.port ?? 3000}/api/trpc`;
 }

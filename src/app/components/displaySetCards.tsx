@@ -7,13 +7,13 @@ export default function DisplaySetCards({ cards }: any) {
   const router = useRouter();
   const getFavs = trpc.getFavs.useQuery();
   const addFav = trpc.addFav.useMutation({
-    onSettled: () => {
+    onSuccess: () => {
       getFavs.refetch()
     }
   }
   );
   const delFav = trpc.delFav.useMutation({
-    onSettled: () => {
+    onSuccess: () => {
       getFavs.refetch()
     }
   })
@@ -37,10 +37,10 @@ export default function DisplaySetCards({ cards }: any) {
                 {i.number}/{i.set.total}
               </div>
               <button onClick={async () => {
-                !getFavs?.data?.some(item => isObjectEqual(item, i.images.small))
+                !getFavs?.data?.some((item: { imageUrl: string | null; }) => isObjectEqual(item, i.images.small))
                   ? addFav.mutate(i.images.small)
                   : delFav.mutate(i.images.small)
-              }}> {getFavs?.data?.some(item => isObjectEqual(item, i.images.small)) ? "❤️" : "🤍"} </button>
+              }}> {getFavs?.data?.some((item: { imageUrl: string | null; }) => isObjectEqual(item, i.images.small)) ? "❤️" : "🤍"} </button>
             </div>
             <img
               className="rounded-md"
