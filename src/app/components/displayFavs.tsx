@@ -20,10 +20,11 @@ export default function DisplayFavs() {
                 <div className='text-center'>{data.length > 0 ? "Favorites" : "You haven't added any favorites"}</div>
                 <div className='grid grid-cols-3 w-fit gap-10'>
                     {data?.map((favs: any) => (
-                        <div className='col-span-1 h-fit w-fit bg-black border rounded-md flex flex-col items-end' key={favs.id}>
-                            <button className='' onClick={async () => {
+                        <div className='col-span-1 h-fit w-fit bg-black border rounded-md flex flex-col items-end' key={favs.id}
+                            onClick={async () => {
                                 delFav.mutate(favs.imageUrl || '')
-                            }}>💔</button>
+                            }}>
+                            💔
                             <img className='[22rem] w-[16rem] rounded-md' placeholder='/backCard.png' src={favs.imageUrl || ''} ></img>
                         </div>
                     ))}
