@@ -1,6 +1,6 @@
 'use client'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { httpBatchLink, loggerLink } from "@trpc/client"
+import { httpLink, loggerLink } from "@trpc/client"
 import React, { useState } from 'react'
 import { trpc } from './client'
 
@@ -10,7 +10,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
         trpc.createClient({
             links: [
                 loggerLink(),
-                httpBatchLink({
+                httpLink({
                     url: "/api/trpc",
                     // url: "https://pokemon-tcg-next13.vercel.app/api/trpc",
                     // url: "http://localhost:3000/api/trpc",
