@@ -4,7 +4,6 @@
 import { trpc } from '../_trpc/client'
 import { useRouter } from 'next/navigation';
 export default function DisplayFavs() {
-    const router = useRouter()
     const getFavs = trpc.getFavs.useQuery()
     const delFav = trpc.delFav.useMutation({
         onSuccess: () => {
@@ -20,11 +19,10 @@ export default function DisplayFavs() {
                 <div className='text-center'>{getFavs.data.length > 0 ? "Favorites" : "You haven't added any favorites"}</div>
                 <div className='grid grid-cols-3 w-fit gap-10'>
                     {getFavs.data?.map((favs: any) => (
-                        <div className='col-span-1 h-fit w-fit bg-black border rounded-md flex flex-col items-end' key={favs.id}
-                            onClick={async () => {
+                        <div className='col-span-1 h-fit w-fit bg-black border rounded-md flex flex-col items-end' key={favs.id}>
+                            <button onClick={async () => {
                                 delFav.mutate(favs.imageUrl || '')
-                            }}>
-                            💔
+                            }}>💔</button>
                             <img className='[22rem] w-[16rem] rounded-md' src={favs.imageUrl} ></img>
                         </div>
                     ))}
