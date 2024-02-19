@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-'use client'
+"use client";
 export default function DisplayCardInfo({ card }: any) {
   function GetTCGPlayerPrices() {
     let p = card?.tcgplayer?.prices;
@@ -7,7 +7,7 @@ export default function DisplayCardInfo({ card }: any) {
     const arr: JSX.Element[] = [
       // eslint-disable-next-line react/jsx-key
       <div className="flex flex-col">
-        <div className="text-left mb-4">
+        <div className="text-left mb-2">
           <div className="text-2xl font-bold">TCG Player Prices</div>
           <a
             target="_blank"
@@ -66,19 +66,17 @@ export default function DisplayCardInfo({ card }: any) {
     return arr;
   }
   return (
-    <div className="h-full bg-white text-black py-20 px-10 border-4 border-slate-200">
-      <div className="flex gap-10 justify-center">
-        <div className="flex items-start">
-          <img
-            src={`${card.images.large}`}
-            alt={"pokemon image"}
-            width={400}
-            height={300}
-            loading="lazy"
-            className={"flex hover:scale-110 rounded-md"}
-          ></img>
-        </div>
-        <div className="">
+    <div className="h-full bg-white text-black p-20 border-4 border-slate-200 w-full">
+      <div className="xl:flex grid gap-10 justify-center">
+        <img
+          src={`${card.images.large}`}
+          alt={"pokemon image"}
+          width={400}
+          height={'auto'}
+          loading="lazy"
+          className={"flex rounded-md"}
+        ></img>
+        <div className="border-black">
           {card?.tcgplayer?.prices ? (
             <GetTCGPlayerPrices />
           ) : (

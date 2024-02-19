@@ -26,13 +26,13 @@ export default function DisplaySetCards({ cards }: any) {
   function CreateCard(i: any) {
     const CardElement = () => {
       return (
-        <div>
+        <div className="flex justify-center items-center">
           <button
             id={i.id}
             className={`text-black hover:rounded-md hover:bg-gradient-to-r from-red-300 via-green-300 to-blue-300 p-1`}
             type={i.supertype}
           >
-            <div className="flex justify-between items-center px-1">
+            <div className="flex justify-between px-1">
               <div>
                 {i.number}/{i.set.total}
               </div>
@@ -46,8 +46,8 @@ export default function DisplaySetCards({ cards }: any) {
               className="rounded-md"
               src={`${i.images.small}`}
               alt={"pokemon image"}
-              width={300}
-              height={100}
+              width={260}
+              height={'auto'}
               loading="lazy"
               onClick={() => router.push(`/card/${i.id}`)}
             ></img>
@@ -73,7 +73,7 @@ export default function DisplaySetCards({ cards }: any) {
   }
   return (
     <div>
-      <div className="flex justify-center gap-10 text-black">
+      <div className="flex justify-center md:gap-10 sm:gap-4 xs:gap-4 text-black">
         {supertypes.map((i) => {
           return (
             <button
@@ -90,7 +90,7 @@ export default function DisplaySetCards({ cards }: any) {
           );
         })}
       </div>
-      <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-6">
+      <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
         <CardsArr />
       </div>
     </div>
