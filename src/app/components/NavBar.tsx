@@ -14,6 +14,7 @@ export default function NavBar() {
       <div className="flex w-full place-content-between justify-center md:text-6xl sm:text-4xl  gap-10 p-4">
         <Link href={"/"}>Home </Link>
         <Link href={"/sets"}>Sets</Link>
+        <Link href={"/collection"}>Collection</Link>
       </div>
       <div></div>
     </div>

@@ -2,57 +2,92 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { trpc } from '../_trpc/client'
-export default function DisplaySetCards({ cards }: any) {
+import { trpc } from "../_trpc/client";
+interface ICardData {
+  id: string;
+  images: {
+    small: string;
+    large: string;
+  };
+  set: {
+    id: string;
+    name: string;
+    series: string;
+    printedTotal: number;
+    total: number;
+  };
+  supertype: string;
+  name: string;
+  number: string;
+}
+interface ICards {
+  cards : ICardData[]
+}
+export default function DisplaySetCards({ cards }: ICards) {
   const router = useRouter();
   const getFavs = trpc.getFavs.useQuery();
   const addFav = trpc.addFav.useMutation({
     onSuccess: () => {
-      getFavs.refetch()
-    }
-  }
-  );
+      getFavs.refetch();
+    },
+  });
   const delFav = trpc.delFav.useMutation({
     onSuccess: () => {
-      getFavs.refetch()
-    }
-  })
+      getFavs.refetch();
+    },
+  });
   const [toggleType, setToggleType] = useState("");
   const supertypes: string[] = ["Pokémon", "Trainer", "Energy"];
-  const cardsAscending = [...cards].sort((a, b) => a.number - b.number);
-  const isObjectEqual = (obj1: { imageUrl: string | null; }, image: string) => {
+  console.log(cards);
+  const cardsAscending = [...cards].sort((a: ICardData, b:ICardData) =>
+    a.number.localeCompare(b.number, undefined, { numeric: true, sensitivity: 'base' })
+  );
+  const isObjectEqual = (obj1: { imageUrl: string | null }, image: string) => {
     return obj1.imageUrl === image;
   };
-  function CreateCard(i: any) {
+  function CreateCard(i: ICardData) {
     const CardElement = () => {
       return (
         <div className="flex justify-center items-center">
           <button
             id={i.id}
             className={`text-black hover:rounded-md hover:bg-gradient-to-r from-red-300 via-green-300 to-blue-300 p-1`}
-            type={i.supertype}
+            data-supertype={i.supertype}
           >
             <div className="flex justify-between px-1">
               <div>
                 {i.number}/{i.set.total}
               </div>
-              <button onClick={async () => {
-                !getFavs?.data?.some((item: { imageUrl: string | null; }) => isObjectEqual(item, i.images.small))
-                  ? addFav.mutate(i.images.small)
-                  : delFav.mutate(i.images.small)
-              }}> {getFavs?.data?.some((item: { imageUrl: string | null; }) => isObjectEqual(item, i.images.small)) ? "❤️" : "🤍"} </button>
+              <button
+                onClick={async () => {
+                  !getFavs?.data?.some((item: { imageUrl: string | null }) =>
+                    isObjectEqual(item, i.images.small)
+                  )
+                    ? addFav.mutate(i.images.small)
+                    : delFav.mutate(i.images.small);
+                }}
+              >
+                {" "}
+                {getFavs?.data?.some((item: { imageUrl: string | null }) =>
+                  isObjectEqual(item, i.images.small)
+                )
+                  ? "❤️"
+                  : "🤍"}{" "}
+              </button>
             </div>
             <img
               className="rounded-md"
               src={`${i.images.small}`}
               alt={"pokemon image"}
               width={260}
-              height={'auto'}
+              height={"auto"}
               loading="lazy"
+              // decoding="async"
+              placeholder={"/backCard.png"}
               onClick={() => router.push(`/card/${i.id}`)}
             ></img>
           </button>
-        </div >
+        </div>
       );
     };
     //filters cards rendered by toggle selected
@@ -65,30 +100,30 @@ export default function DisplaySetCards({ cards }: any) {
     );
   }
   function CardsArr() {
-    let arr = []
+    let arr = [];
     for (let i: number = 0; i < Object.values(cardsAscending).length; i++) {
-      arr.push(CreateCard(cardsAscending[i]))
+      arr.push(CreateCard(cardsAscending[i]));
     }
-    return arr
+    return arr;
   }
+
   return (
     <div>
       <div className="flex justify-center md:gap-10 sm:gap-4 xs:gap-4 text-black">
-        {supertypes.map((i) => {
-          return (
-            <button
-              key={i}
-              value={i}
-              className={`border border-black px-3 mb-6 rounded-md font-bold ${toggleType === i ? "bg-emerald-300 " : " bg-white"
-                }`}
-              onClick={() =>
-                toggleType === i ? setToggleType("") : setToggleType(i)
-              }
-            >
-              {i}
-            </button>
-          );
-        })}
+        {supertypes.map((i) => (
+          <button
+            key={i}
+            value={i}
+            className={`border border-black px-3 mb-6 rounded-md font-bold ${
+              toggleType === i ? "bg-emerald-300 " : " bg-white"
+            }`}
+            onClick={() =>
+              toggleType === i ? setToggleType("") : setToggleType(i)
+            }
+          >
+            {i}
+          </button>
+        ))}
       </div>
       <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
         <CardsArr />
