@@ -18,7 +18,7 @@ export default function DisplayFavs() {
     imageUrl?: string | null;
   }
 
-  function createCard(i: IFavCard) {
+  function CreateCard(i: IFavCard) {
     function handleEnter() {
       setHoverStatus(true);
     }
@@ -59,7 +59,7 @@ export default function DisplayFavs() {
     }
     let arr = [];
     for (let i: number = 0; i < Object.values(getFavs.data).length; i++) {
-      arr.push(createCard(getFavs.data[i]));
+      arr.push(CreateCard(getFavs.data[i]));
     }
     return arr;
   }
