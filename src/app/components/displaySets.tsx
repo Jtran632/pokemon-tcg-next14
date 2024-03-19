@@ -23,7 +23,7 @@ interface ItcgSet {
 export default function DisplaySets({ tcgSets }: ItcgSet) {
   // console.log(tcgSets.data);
   const [curView, setCurView] = useState(0);
-  const tcgSetsByDate = tcgSets.data.sort((a: any, b: any) =>
+  const tcgSetsByDate = tcgSets.data.sort((a: ItcgSetData, b: ItcgSetData) =>
     b.releaseDate.localeCompare(a.releaseDate)
   );
   function MapSets() {

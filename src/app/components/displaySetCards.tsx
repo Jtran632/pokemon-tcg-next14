@@ -38,7 +38,7 @@ export default function DisplaySetCards({ cards }: ICards) {
   });
   const [toggleType, setToggleType] = useState("");
   const supertypes: string[] = ["Pokémon", "Trainer", "Energy"];
-  console.log(cards);
+  // console.log(cards);
   const cardsAscending = [...cards].sort((a: ICardData, b:ICardData) =>
     a.number.localeCompare(b.number, undefined, { numeric: true, sensitivity: 'base' })
   );
@@ -54,7 +54,7 @@ export default function DisplaySetCards({ cards }: ICards) {
             className={`text-black hover:rounded-md hover:bg-gradient-to-r from-red-300 via-green-300 to-blue-300 p-1`}
             data-supertype={i.supertype}
           >
-            <div className="flex justify-between px-1">
+            <div className="flex justify-between px-1 border-2 border-b-0 border-black rounded-t-md bg-black text-white">
               <div>
                 {i.number}/{i.set.total}
               </div>
@@ -76,7 +76,7 @@ export default function DisplaySetCards({ cards }: ICards) {
               </button>
             </div>
             <img
-              className="rounded-md"
+              className="border-2 border-t-0 border-black rounded-b-xl bg-black"
               src={`${i.images.small}`}
               alt={"pokemon image"}
               width={260}
@@ -125,7 +125,7 @@ export default function DisplaySetCards({ cards }: ICards) {
           </button>
         ))}
       </div>
-      <div className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
+      <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
         <CardsArr />
       </div>
     </div>
