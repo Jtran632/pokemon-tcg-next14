@@ -8,5 +8,6 @@ export const users = pgTable('users', {
 
 export const favCards = pgTable("favCards", {
   id: serial("id").primaryKey(),
+  cardId: text('cardId'),
   imageUrl: text("imageUrl"),
 });

@@ -39,7 +39,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.20.4",
+    "drizzle-kit": "^0.20.14",
     "eslint": "^8.54.0"
   }
 }

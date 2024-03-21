@@ -8,10 +8,19 @@ export const appRouter = createTRPCRouter({
     return await db.select().from(favCards);
   }),
   addFav: publicProcedure
-    .input(z.string())
-    .mutation(async (opts: { input: string }) => {
-      await db.insert(favCards).values({ imageUrl: opts.input });
-    }),
+    .input(z.object({ id: z.string(), imageUrl: z.string() }))
+    .mutation(
+      async (opts: {
+        input: {
+          id: string;
+          imageUrl: string;
+        };
+      }) => {
+        await db
+          .insert(favCards)
+          .values({ cardId: opts.input.id, imageUrl: opts.input.imageUrl });
+      }
+    ),
   delFav: publicProcedure
     .input(z.string())
     .mutation(async (opts: { input: string }) => {

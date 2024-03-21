@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 "use client";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { trpc } from "../_trpc/client";
 import { useState } from "react";
 export default function DisplayFavs() {
-  //   const router = useRouter();
+  const router = useRouter();
   const getFavs = trpc.getFavs.useQuery();
   const delFav = trpc.delFav.useMutation({
     onSuccess: () => {
@@ -15,6 +15,7 @@ export default function DisplayFavs() {
 
   interface IFavCard {
     id?: number;
+    cardId?: string | null;
     imageUrl?: string | null;
   }
 
@@ -34,7 +35,7 @@ export default function DisplayFavs() {
         <div className="flex justify-between px-1">
           <button
             className="text-white"
-            // onClick={} todo : once addFavs is modified with card id route to large card page
+            onClick={() => router.push(`/card/${i.cardId}`)}
           >
             🔎
           </button>

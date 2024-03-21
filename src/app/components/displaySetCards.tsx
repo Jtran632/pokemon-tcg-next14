@@ -21,7 +21,7 @@ interface ICardData {
   number: string;
 }
 interface ICards {
-  cards : ICardData[]
+  cards: ICardData[];
 }
 export default function DisplaySetCards({ cards }: ICards) {
   const router = useRouter();
@@ -39,8 +39,11 @@ export default function DisplaySetCards({ cards }: ICards) {
   const [toggleType, setToggleType] = useState("");
   const supertypes: string[] = ["Pokémon", "Trainer", "Energy"];
   // console.log(cards);
-  const cardsAscending = [...cards].sort((a: ICardData, b:ICardData) =>
-    a.number.localeCompare(b.number, undefined, { numeric: true, sensitivity: 'base' })
+  const cardsAscending = [...cards].sort((a: ICardData, b: ICardData) =>
+    a.number.localeCompare(b.number, undefined, {
+      numeric: true,
+      sensitivity: "base",
+    })
   );
   const isObjectEqual = (obj1: { imageUrl: string | null }, image: string) => {
     return obj1.imageUrl === image;
@@ -63,7 +66,7 @@ export default function DisplaySetCards({ cards }: ICards) {
                   !getFavs?.data?.some((item: { imageUrl: string | null }) =>
                     isObjectEqual(item, i.images.small)
                   )
-                    ? addFav.mutate(i.images.small)
+                    ? addFav.mutate({ id: i.id, imageUrl: i.images.small })
                     : delFav.mutate(i.images.small);
                 }}
               >
