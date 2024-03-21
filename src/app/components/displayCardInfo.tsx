@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 export default function DisplayCardInfo({ card }: any) {
+  // console.log(card)
   function GetTCGPlayerPrices() {
     let p = card?.tcgplayer?.prices;
     let k = Object.keys(p);
@@ -67,14 +68,14 @@ export default function DisplayCardInfo({ card }: any) {
   }
   return (
     <div className="h-full bg-white text-black p-20 border-4 border-slate-200 w-full">
-      <div className="xl:flex grid gap-10 justify-center">
+      <div className="xl:flex grid gap-20 justify-center">
         <img
           src={`${card.images.large}`}
           alt={"pokemon image"}
           width={400}
-          height={'auto'}
+          height={"auto"}
           loading="lazy"
-          className={"flex rounded-md"}
+          className={`flex rounded-md transition duration-500 hover:scale-125 `}
         ></img>
         <div className="border-black">
           {card?.tcgplayer?.prices ? (
