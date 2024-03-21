@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState} from "react";
+import { useState } from "react";
 
 export default function SearchPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -17,14 +17,14 @@ export default function SearchPage() {
     return res.data;
   }
 
-  async function onSubmit(event: { preventDefault: () => void; }) {
+  async function onSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     if (query.trim() === "") {
-      setErrorMessage("Please enter in something ")
+      setErrorMessage("Please enter in something ");
       return;
     }
     setIsLoading(true); // Set loading to true when the request starts
-    setErrorMessage("")
+    setErrorMessage("");
     const arr = await getQuery();
     setIsLoading(false);
     setCards(arr);
@@ -60,7 +60,7 @@ export default function SearchPage() {
       <div>
         {isLoading ? (
           <div className="pt-10">
-            Searching for cards that include "{query}"
+            Searching for cards that include: {query}
           </div>
         ) : (
           <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 pt-10">
