@@ -128,7 +128,7 @@ export default function DisplaySetCards({ cards }: ICards) {
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-3 gap-2 pt-10">
+      <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-3 gap-2">
         <CardsArr />
       </div>
     </div>
