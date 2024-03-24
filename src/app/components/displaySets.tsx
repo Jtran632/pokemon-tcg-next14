@@ -21,7 +21,7 @@ interface ItcgSet {
   };
 }
 export default function DisplaySets({ tcgSets }: ItcgSet) {
-  // console.log(tcgSets.data);
+  console.log(tcgSets.data);
   const [curView, setCurView] = useState(0);
   const tcgSetsByDate = tcgSets.data.sort((a: ItcgSetData, b: ItcgSetData) =>
     b.releaseDate.localeCompare(a.releaseDate)
@@ -34,7 +34,7 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
             {tcgSetsByDate.map((i: ItcgSetData) => (
               <div
                 key={i.id}
-                className="flex items-center justify-between gap-2 border-2 border-gray-400 p-4 bg-white text-black"
+                className="flex items-center justify-between gap-2 border-2 border-gray-400 p-4 bg-white text-black "
               >
                 <div className="flex-col text-center">
                   <img
@@ -49,10 +49,12 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
                   </Link>
                 </div>
 
-                <div className="text-right font-bold flex flex-col items-end">
+                <div className="text-right font-bold flex flex-col items-end text-xs">
+                  <div>{i?.series}</div>
                   <div>{i?.name}</div>
                   <div>
-                    {i?.printedTotal} / {i?.total}
+                    P:{i?.printedTotal} / S:{i?.total - i.printedTotal} / T:
+                    {i?.total}
                   </div>
                   <div>{i?.releaseDate}</div>
                   <div>{i?.ptcgoCode}</div>
@@ -68,10 +70,18 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
           </div>
         ) : (
           <div className="grid justify-center text-sm items-center">
+            <div className="grid grid-cols-8 text-black font-bold border-black border items-center p-4">
+              <div className="col-span-2">Series/Set</div>
+              <div>Symbol</div>
+              <div>Id</div>
+              <div>ptcgoCode</div>
+              <div>Printed/Secret/Total</div>
+              <div>Release Date</div>
+              <div></div>
+            </div>
             {tcgSetsByDate.map((i: ItcgSetData, j: number) => (
               <div
                 key={i.id}
-                // className="flex items-center justify-around border border-gray-400 h-12 p-2 w-full bg-white text-black"
                 className="grid grid-cols-8 text-black  border-black border items-center p-4"
               >
                 <div className=" col-span-2 w-full">
@@ -85,13 +95,12 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
                 <div>{i.id}</div>
                 {i?.ptcgoCode ? <div>{i.ptcgoCode}</div> : <div>N/A</div>}
                 <div>
-                  {i?.printedTotal} / {i?.total}
+                  {i?.printedTotal} / {i?.total - i.printedTotal} / {i?.total}
                 </div>
                 <div>{i?.releaseDate}</div>
                 <div className="flex-col text-center">
                   <Link href={`/sets/${i.id}`} className="underline">
-                    {" "}
-                    View Cards{" "}
+                    View Cards
                   </Link>
                 </div>
               </div>

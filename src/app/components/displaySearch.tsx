@@ -42,7 +42,7 @@ export default function SearchPage() {
 
   async function getQuery() {
     const response = await fetch(
-      `https://api.pokemontcg.io/v2/cards?q=name:${query}*&orderBy=-set.releaseDate`
+      `https://api.pokemontcg.io/v2/cards?q=name:*${query}*&orderBy=-set.releaseDate`
     );
     const res = await response.json();
     console.log(res.data)
@@ -120,7 +120,7 @@ export default function SearchPage() {
     }
     return arr;
   }
-  
+
   return (
     <div className="flex flex-col items-center">
       <form
