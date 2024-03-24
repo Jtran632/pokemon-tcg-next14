@@ -25,7 +25,7 @@ export default function DisplayCardInfo({ card }: any) {
       arr.push(
         <div>
           <div>{k[i].toUpperCase()}</div>
-          <div className="grid md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 gap-3 mb-6 font-semibold text-xs">
+          <div className="grid grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 gap-3 mb-4 font-semibold text-xs">
             <div>Low: ${p[k[i]]?.low}</div>
             <div>Mid: ${p[k[i]]?.mid}</div>
             <div>High: ${p[k[i]]?.high}</div>
@@ -55,7 +55,7 @@ export default function DisplayCardInfo({ card }: any) {
       </div>,
     ];
     arr.push(
-      <div className="grid md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 gap-3 mb-6 font-semibold text-xs">
+      <div className="grid grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 gap-3 mb-6 font-semibold text-xs">
         <div>Low: {p?.lowPrice}€</div>
         <div>Trend: {p?.trendPrice}€</div>
         <div>AvgSell: {p?.averageSellPrice}€</div>
@@ -68,7 +68,7 @@ export default function DisplayCardInfo({ card }: any) {
   }
   return (
     <div className="h-full bg-white text-black p-20 border-4 border-slate-200 w-full">
-      <div className="xl:flex grid gap-20 justify-center">
+      <div className="flex lg:grid gap-20 justify-center">
         <img
           src={`${card.images.large}`}
           alt={"pokemon image"}
