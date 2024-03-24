@@ -30,26 +30,28 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
     return (
       <>
         {curView === 0 ? (
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-2">
+          <div className="grid grid-cols-4 md:grid-cols-3 gap-2">
             {tcgSetsByDate.map((i: ItcgSetData) => (
               <div
                 key={i.id}
-                className="flex items-center justify-between gap-2 border-2 border-gray-400 p-4 bg-white text-black "
+                className="grid grid-cols-3 sm:grid-cols-1 items-center justify-between sm:justify-center gap-2 border-2 border-gray-400 p-4 bg-white text-black "
               >
-                <div className="flex-col text-center">
+                <div className="flex flex-col justify-between items-center text-xs h-28 w-full">
                   <img
                     src={`${i.images.logo}`}
+                    className="w-fit h-1/2 items-end"
                     alt={"set"}
-                    width={150}
-                    height={150}
                   ></img>
+                  <div className="collapse sm:visible font-bold text-[8px]">
+                    {i?.name}
+                  </div>
                   <Link href={`/sets/${i.id}`} className="underline">
                     {" "}
                     View Cards{" "}
                   </Link>
                 </div>
 
-                <div className="text-right font-bold flex flex-col items-end text-xs">
+                <div className="col-span-2 text-right font-bold flex flex-col items-end text-xs lg:text-[10px] sm:text-[8px] sm:hidden">
                   <div>{i?.series}</div>
                   <div>{i?.name}</div>
                   <div>
@@ -62,7 +64,7 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
                     src={`${i.images.symbol}`}
                     alt={"set"}
                     width={30}
-                    height={50}
+                    height={40}
                   ></img>
                 </div>
               </div>

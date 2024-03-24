@@ -7,7 +7,7 @@ async function getSets() {
 export default async function Home() {
   let a = await getSets();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between px-24 pb-24 pt-10 bg-white">
+    <main className="flex min-h-screen flex-col items-center justify-between px-10 pb-20 pt-10 bg-white">
       <DisplaySets tcgSets={a} />
     </main>
   );

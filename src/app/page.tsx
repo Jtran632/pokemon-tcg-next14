@@ -13,7 +13,7 @@ export default async function Home() {
   // }
   //todo search function for home page
   return (
-    <main className="flex flex-col justify center min-h-screen pt-10 p-20 text-black bg-white">
+    <main className="flex flex-col justify center min-h-screen py-10 px-20 sm:px-10 xs:px-10 text-black bg-white">
       <DisplaySearch />
     </main>
   );
