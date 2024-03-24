@@ -75,7 +75,7 @@ export default function DisplayFavs() {
         <div className="text-center">
           {getFavs.data.length > 0 ? "" : "You haven't added any favorites"}
         </div>
-        <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
+        <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 px-20">
           <FavCards />
         </div>
       </div>
