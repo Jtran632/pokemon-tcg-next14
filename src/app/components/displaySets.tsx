@@ -71,32 +71,34 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
             ))}
           </div>
         ) : (
-          <div className="grid justify-center text-sm items-center">
-            <div className="grid grid-cols-8 text-black font-bold border-black border items-center p-4">
-              <div className="col-span-2">Series/Set</div>
+          <div className="flex flex-col justify-center text-sm lg:text-[8px] items-center w-full">
+            <div className="grid grid-cols-7 md:grid-cols-4 text-black font-bold border-black border items-center p-2 w-full">
+              <div>Series/Set</div>
               <div>Symbol</div>
-              <div>Id</div>
-              <div>ptcgoCode</div>
-              <div>Printed/Secret/Total</div>
+              <div className="md:hidden">Id</div>
+              <div className="md:hidden">ptcgoCode</div>
+              <div className="md:hidden">Printed/Secret/Total</div>
               <div>Release Date</div>
-              <div></div>
             </div>
             {tcgSetsByDate.map((i: ItcgSetData, j: number) => (
               <div
                 key={i.id}
-                className="grid grid-cols-8 text-black  border-black border items-center p-4"
+                className="grid grid-cols-7 md:grid-cols-4 text-black  border-black border items-center p-2 w-full"
               >
-                <div className=" col-span-2 w-full">
-                  {i?.series} - {i?.name}{" "}
+                <div>
+                  <div className="font-semibold">{i?.name} </div>
+                  <div>{i?.series}</div>
                 </div>
                 <img
                   className="h-8"
                   src={`${i.images.symbol}`}
                   alt={"set"}
+                  width={"auto"}
+                  height={10}
                 ></img>
-                <div>{i.id}</div>
-                {i?.ptcgoCode ? <div>{i.ptcgoCode}</div> : <div>N/A</div>}
-                <div>
+                <div className="md:hidden">{i.id}</div>
+                <div className="md:hidden">{i?.ptcgoCode || "N/A"}</div>
+                <div className="md:hidden">
                   {i?.printedTotal} / {i?.total - i.printedTotal} / {i?.total}
                 </div>
                 <div>{i?.releaseDate}</div>
@@ -115,7 +117,7 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
 
   return (
     <div className="w-full">
-      <div className="flex justify-end w-full pb-2">
+      <div className="flex justify-end w-full pb-2 text-xs">
         <button
           className="text-black border-2 border-r-0 border-black p-1"
           onClick={() => {
