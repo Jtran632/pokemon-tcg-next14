@@ -82,7 +82,7 @@ export default function DisplaySetCards({ cards }: ICards) {
               className="border-2 border-t-0 border-black rounded-b-xl bg-black"
               src={`${i.images.small}`}
               alt={"pokemon image"}
-              width={260}
+              width={400}
               height={"auto"}
               loading="lazy"
               // decoding="async"
@@ -112,7 +112,7 @@ export default function DisplaySetCards({ cards }: ICards) {
 
   return (
     <div>
-      <div className="flex justify-center md:gap-10 sm:gap-4 xs:gap-4 text-black">
+      <div className="flex justify-center gap-6 sm:gap-4 xs:gap-4 text-black">
         {supertypes.map((i) => (
           <button
             key={i}
@@ -128,7 +128,7 @@ export default function DisplaySetCards({ cards }: ICards) {
           </button>
         ))}
       </div>
-      <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
+      <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-3 gap-2 pt-10">
         <CardsArr />
       </div>
     </div>

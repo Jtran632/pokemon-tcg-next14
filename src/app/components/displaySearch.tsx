@@ -45,7 +45,7 @@ export default function SearchPage() {
       `https://api.pokemontcg.io/v2/cards?q=name:*${query}*&orderBy=-set.releaseDate`
     );
     const res = await response.json();
-    console.log(res.data)
+    console.log(res.data);
     return res.data;
   }
   async function onSubmit(event: { preventDefault: () => void }) {
@@ -59,7 +59,7 @@ export default function SearchPage() {
     const arr = await getQuery();
     setIsLoading(false);
     setCards(arr);
-    console.log(cards)
+    console.log(cards);
   }
 
   function CreateCard(i: ICardData) {
@@ -151,7 +151,7 @@ export default function SearchPage() {
         {isLoading ? (
           <div className="pt-10">Searching for cards that include: {query}</div>
         ) : (
-          <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 pt-10 px-20">
+          <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-3 gap-2 pt-10">
             <CardSearchDisplay />
           </div>
         )}

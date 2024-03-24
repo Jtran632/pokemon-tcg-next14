@@ -49,7 +49,12 @@ export default function DisplayFavs() {
             {!hoverStatus ? "❤️" : "💔"}
           </button>
         </div>
-        <img className="" src={i.imageUrl || ""}></img>
+        <img
+          className=""
+          src={i.imageUrl || ""}
+          width={400}
+          height={"auto"}
+        ></img>
       </div>
     );
   }
@@ -75,7 +80,7 @@ export default function DisplayFavs() {
         <div className="text-center">
           {getFavs.data.length > 0 ? "" : "You haven't added any favorites"}
         </div>
-        <div className="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 px-20">
+        <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-3 gap-2 pt-10">
           <FavCards />
         </div>
       </div>

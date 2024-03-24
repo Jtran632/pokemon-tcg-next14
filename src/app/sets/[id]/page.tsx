@@ -17,7 +17,7 @@ export default async function SetPageWithName({ params }: any) {
   let allCards = [...cards[0].data, ...cards[1].data]
   // console.log(allCards)
   return (
-    <div className="bg-white min-h-screen h-full px-44 pt-10 pb-20">
+    <div className="bg-white min-h-screen h-full px-20 pt-10 pb-20">
       <DisplaySetCards cards={allCards} />
     </div>
   );
