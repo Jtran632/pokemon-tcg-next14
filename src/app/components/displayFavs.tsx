@@ -7,6 +7,7 @@ import { delFav } from "@/lib/actions";
 import { ICardData, IFavCard } from "@/lib/types";
 
 export default function DisplayFavs({ favs }: any) {
+  console.log(favs);
   const router = useRouter();
   function CreateCard({ card }: { card: IFavCard }) {
     function handleEnter() {
@@ -32,7 +33,7 @@ export default function DisplayFavs({ favs }: any) {
             onMouseEnter={() => handleEnter()}
             onMouseLeave={() => handleExit()}
             onClick={() => {
-              [delFav(card.imageUrl || ""), router.refresh()];
+              [delFav(card.imageUrl || ""), router.push("/collection")];
             }}
           >
             {!hoverStatus ? "❤️" : "💔"}
