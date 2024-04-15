@@ -2,9 +2,10 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
-import { delFav, getFavs } from "@/lib/actions";
-import { IFavCard } from "@/lib/types";
+import { Key, useState } from "react";
+import { delFav } from "@/lib/actions";
+import { ICardData, IFavCard } from "@/lib/types";
+
 export default function DisplayFavs({ favs }: any) {
   console.log(favs);
   const router = useRouter();
@@ -31,8 +32,8 @@ export default function DisplayFavs({ favs }: any) {
           <button
             onMouseEnter={() => handleEnter()}
             onMouseLeave={() => handleExit()}
-            onClick={async () => {
-              [await delFav(card.imageUrl || ""), router.refresh()];
+            onClick={() => {
+              [delFav(card.imageUrl || ""), router.refresh()];
             }}
           >
             {!hoverStatus ? "❤️" : "💔"}
@@ -54,16 +55,19 @@ export default function DisplayFavs({ favs }: any) {
     ));
   }
 
-  if (!favs) {
-    return <>Loading...</>;
+  if (favs.length <= 0) {
+    return (
+      <div className="w-screen h-fit text-black">
+        <div className="flex flex-col justify-center items-center">
+          You haven't added any favorites
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="w-screen h-fit">
       <div className="flex flex-col justify-center items-center">
-        <div className="text-center">
-          {favs.length > 0 ? "" : "You haven't added any favorites"}
-        </div>
         <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-3 gap-2">
           <FavCards />
         </div>
