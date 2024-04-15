@@ -3,12 +3,12 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { Key, useState } from "react";
-import { delFav } from "@/lib/actions";
+import { getFavs, delFav } from "@/lib/actions";
 import { ICardData, IFavCard } from "@/lib/types";
-
-export default function DisplayFavs({ favs }: any) {
-  console.log(favs);
+export default function DisplayFavs({ favsData }: any) {
+  // console.log(favs);
   const router = useRouter();
+  const [favs, setFavs] = useState(favsData);
   function CreateCard({ card }: { card: IFavCard }) {
     function handleEnter() {
       setHoverStatus(true);
@@ -32,8 +32,12 @@ export default function DisplayFavs({ favs }: any) {
           <button
             onMouseEnter={() => handleEnter()}
             onMouseLeave={() => handleExit()}
-            onClick={() => {
-              [delFav(card.imageUrl || ""), router.push("/collection")];
+            onClick={async () => {
+              [
+                await delFav(card.imageUrl || ""),
+                await setFavs(getFavs()),
+                router.refresh(),
+              ];
             }}
           >
             {!hoverStatus ? "❤️" : "💔"}
