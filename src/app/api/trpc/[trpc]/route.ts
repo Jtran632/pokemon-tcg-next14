@@ -4,6 +4,7 @@ import { postRouter } from "@/server/api/routers/posts";
 import { type NextRequest } from "next/server";
 import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { Session } from "next-auth";
+export const dynamic = "force-dynamic";
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
     endpoint: "/api/trpc",
