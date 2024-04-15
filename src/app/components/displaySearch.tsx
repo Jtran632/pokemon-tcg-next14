@@ -33,7 +33,7 @@ export default function DisplaySearch({ favs }: any) {
     setCards(arr);
   }
 
-  function CreateCard(i: ICardData) {
+  function CreateCard({ i }: { i: ICardData }) {
     const isObjectEqual = (
       card: { imageUrl: string | null },
       image: string
@@ -82,14 +82,7 @@ export default function DisplaySearch({ favs }: any) {
   }
 
   function CardSearchDisplay() {
-    if (!cards) {
-      return null;
-    }
-    let arr = [];
-    for (let i: number = 0; i < Object.values(cards).length; i++) {
-      arr.push(CreateCard(cards[i]));
-    }
-    return arr;
+    return cards.map((card) => <CreateCard key={card.id} i={card} />);
   }
 
   return (

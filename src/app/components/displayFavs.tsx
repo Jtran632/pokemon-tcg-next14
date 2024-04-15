@@ -2,9 +2,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useRouter } from "next/navigation";
-import { Key, useState } from "react";
+import { useState } from "react";
 import { delFav } from "@/lib/actions";
-import { ICardData, IFavCard } from "@/lib/types";
+import { IFavCard } from "@/lib/types";
 
 export default function DisplayFavs({ favs }: any) {
   console.log(favs);
@@ -32,7 +32,7 @@ export default function DisplayFavs({ favs }: any) {
           <button
             onMouseEnter={() => handleEnter()}
             onMouseLeave={() => handleExit()}
-            onClick={() => {
+            onClick={async () => {
               [delFav(card.imageUrl || ""), router.refresh()];
             }}
           >
