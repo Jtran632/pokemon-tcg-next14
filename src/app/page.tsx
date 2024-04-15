@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import DisplaySearch from "./components/displaySearch";
 import { getFavs } from "@/lib/actions";
+export const dynamic = "force-dynamic";
 export default async function Home() {
   let favs = await getFavs();
   return (
