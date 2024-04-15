@@ -2,14 +2,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useRouter } from "next/navigation";
-import { Key, useState } from "react";
-import { getFavs, delFav } from "@/lib/actions";
-import { ICardData, IFavCard } from "@/lib/types";
-export default function DisplayFavs({ favsData }: any) {
-  // console.log(favs);
-  const router = useRouter();
-  const [favs, setFavs] = useState(favsData);
+import { useState, useEffect } from "react";
+import { delFav, getFavs } from "@/lib/actions";
+import { IFavCard } from "@/lib/types";
+export default function DisplayFavs({ favs }: any) {
   console.log(favs);
+  const router = useRouter();
   function CreateCard({ card }: { card: IFavCard }) {
     function handleEnter() {
       setHoverStatus(true);
@@ -34,7 +32,7 @@ export default function DisplayFavs({ favsData }: any) {
             onMouseEnter={() => handleEnter()}
             onMouseLeave={() => handleExit()}
             onClick={async () => {
-              [await delFav(card.imageUrl || ""), setFavs(await getFavs())];
+              [await delFav(card.imageUrl || ""), router.refresh()];
             }}
           >
             {!hoverStatus ? "❤️" : "💔"}
