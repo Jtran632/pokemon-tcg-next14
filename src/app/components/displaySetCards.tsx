@@ -2,112 +2,83 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { trpc } from "../_trpc/client";
-interface ICardData {
-  id: string;
-  images: {
-    small: string;
-    large: string;
-  };
-  set: {
-    id: string;
-    name: string;
-    series: string;
-    printedTotal: number;
-    total: number;
-  };
-  supertype: string;
-  name: string;
-  number: string;
-}
-interface ICards {
+import { addFav, delFav } from "@/lib/actions";
+import { ICardData } from "@/lib/types";
+
+export default function DisplaySetCards({
+  cards,
+  favs,
+}: {
   cards: ICardData[];
-}
-export default function DisplaySetCards({ cards }: ICards) {
+  favs: any;
+}) {
   const router = useRouter();
-  const getFavs = trpc.getFavs.useQuery();
-  const addFav = trpc.addFav.useMutation({
-    onSuccess: () => {
-      getFavs.refetch();
-    },
-  });
-  const delFav = trpc.delFav.useMutation({
-    onSuccess: () => {
-      getFavs.refetch();
-    },
-  });
   const [toggleType, setToggleType] = useState("");
   const supertypes: string[] = ["Pokémon", "Trainer", "Energy"];
-  // console.log(cards);
-  const cardsAscending = [...cards].sort((a: ICardData, b: ICardData) =>
-    a.number.localeCompare(b.number, undefined, {
-      numeric: true,
-      sensitivity: "base",
-    })
-  );
-  const isObjectEqual = (obj1: { imageUrl: string | null }, image: string) => {
-    return obj1.imageUrl === image;
+  // const cardsAscending = cards.sort((a: ICardData, b: ICardData) =>
+  //   a.number.localeCompare(b.number, undefined, {
+  //     numeric: true,
+  //     sensitivity: "base",
+  //   })
+  // );
+  const isObjectEqual = (card: { imageUrl: string | null }, image: string) => {
+    return card.imageUrl === image;
   };
-  function CreateCard(i: ICardData) {
+  function CreateCard({ card }: { card: ICardData }) {
     const CardElement = () => {
       return (
-        <div className="flex justify-center items-center">
-          <button
-            id={i.id}
+        <div className="flex justify-center items-center" key={card.id}>
+          <div
+            id={card.id}
             className={`text-black hover:rounded-md hover:bg-gradient-to-r from-red-300 via-green-300 to-blue-300 p-1`}
-            data-supertype={i.supertype}
+            data-supertype={card.supertype}
           >
             <div className="flex justify-between px-1 border-2 border-b-0 border-black rounded-t-md bg-black text-white">
               <div>
-                {i.number}/{i.set.total}
+                {card.number}/{card.set.total}
               </div>
               <button
                 onClick={async () => {
-                  !getFavs?.data?.some((item: { imageUrl: string | null }) =>
-                    isObjectEqual(item, i.images.small)
+                  !favs?.some((image: { imageUrl: string | null }) =>
+                    isObjectEqual(image, card.images.small)
                   )
-                    ? addFav.mutate({ id: i.id, imageUrl: i.images.small })
-                    : delFav.mutate(i.images.small);
+                    ? [addFav(card.id, card.images.small), router.refresh()]
+                    : [delFav(card.images.small), router.refresh()];
                 }}
               >
-                {" "}
-                {getFavs?.data?.some((item: { imageUrl: string | null }) =>
-                  isObjectEqual(item, i.images.small)
+                {favs?.some((image: { imageUrl: string | null }) =>
+                  isObjectEqual(image, card.images.small)
                 )
                   ? "❤️"
-                  : "🤍"}{" "}
+                  : "🤍"}
               </button>
             </div>
             <img
               className="border-2 border-t-0 border-black rounded-b-xl bg-black"
-              src={`${i.images.small}`}
+              src={`${card.images.small}`}
               alt={"pokemon image"}
               width={400}
               height={"auto"}
               loading="lazy"
-              // decoding="async"
               placeholder={"/backCard.png"}
-              onClick={() => router.push(`/card/${i.id}`)}
+              onClick={() => router.push(`/card/${card.id}`)}
             ></img>
-          </button>
+          </div>
         </div>
       );
     };
     //filters cards rendered by toggle selected
     return toggleType === "" ? (
-      <CardElement key={i.id} />
-    ) : toggleType === i.supertype ? (
-      <CardElement key={i.id} />
+      <CardElement key={card.id} />
+    ) : toggleType === card.supertype ? (
+      <CardElement key={card.id} />
     ) : (
       <></>
     );
   }
+
   function CardsArr() {
-    let arr = [];
-    for (let i: number = 0; i < Object.values(cardsAscending).length; i++) {
-      arr.push(CreateCard(cardsAscending[i]));
-    }
-    return arr;
+    return cards.map((card) => <CreateCard key={card.id} card={card} />);
   }
 
   return (

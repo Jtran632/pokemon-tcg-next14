@@ -1,13 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 export default function DisplayCardInfo({ card }: any) {
-  // console.log(card)
   function GetTCGPlayerPrices() {
     let p = card?.tcgplayer?.prices;
     let k = Object.keys(p);
     const arr: JSX.Element[] = [
-      // eslint-disable-next-line react/jsx-key
-      <div className="flex flex-col">
+      <div className="flex flex-col" key="tcg-player-info">
         <div className="text-left mb-2">
           <div className="text-2xl font-bold">TCG Player Prices</div>
           <a
@@ -23,7 +21,7 @@ export default function DisplayCardInfo({ card }: any) {
     ];
     for (let i: number = 0; i < k.length; i++) {
       arr.push(
-        <div>
+        <div key={`tcg-player-price-${i}`}>
           <div>{k[i].toUpperCase()}</div>
           <div className="grid grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 gap-3 mb-4 font-semibold text-xs">
             <div>Low: ${p[k[i]]?.low}</div>
@@ -39,8 +37,7 @@ export default function DisplayCardInfo({ card }: any) {
   function GetCardMarketPrices() {
     let p = card?.cardmarket?.prices;
     const arr: JSX.Element[] = [
-      // eslint-disable-next-line react/jsx-key
-      <div className="flex flex-col">
+      <div className="flex flex-col" key="cardmarket-info">
         <div className="text-left mb-4">
           <div className="text-2xl font-bold">Cardmarket Prices</div>
           <a
@@ -55,7 +52,10 @@ export default function DisplayCardInfo({ card }: any) {
       </div>,
     ];
     arr.push(
-      <div className="grid grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 gap-3 mb-6 font-semibold text-xs">
+      <div
+        className="grid grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 gap-3 mb-6 font-semibold text-xs"
+        key="cardmarket-prices"
+      >
         <div>Low: {p?.lowPrice}€</div>
         <div>Trend: {p?.trendPrice}€</div>
         <div>AvgSell: {p?.averageSellPrice}€</div>

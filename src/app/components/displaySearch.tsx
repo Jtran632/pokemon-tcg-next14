@@ -1,51 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { trpc } from "../_trpc/client";
-import { useState } from "react";
+// import { trpc } from "../_trpc/client";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-export default function SearchPage() {
+import { addFav, delFav } from "@/lib/actions";
+import { ICardData } from "@/lib/types";
+export default function DisplaySearch({ favs }: any) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [cards, setCards] = useState<any[]>([]);
   const [query, setQuery] = useState("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const router = useRouter();
-  const getFavs = trpc.getFavs.useQuery();
-  const addFav = trpc.addFav.useMutation({
-    onSuccess: () => {
-      getFavs.refetch();
-    },
-  });
-  const delFav = trpc.delFav.useMutation({
-    onSuccess: () => {
-      getFavs.refetch();
-    },
-  });
-
-  interface ICardData {
-    id: string;
-    images: {
-      small: string;
-      large: string;
-    };
-    set: {
-      id: string;
-      name: string;
-      series: string;
-      printedTotal: number;
-      total: number;
-    };
-    supertype: string;
-    name: string;
-    number: string;
-  }
-
+  useEffect(() => {}, [favs]);
   async function getQuery() {
     const response = await fetch(
       `https://api.pokemontcg.io/v2/cards?q=name:*${query}*&orderBy=-set.releaseDate`
     );
     const res = await response.json();
-    console.log(res.data);
     return res.data;
   }
   async function onSubmit(event: { preventDefault: () => void }) {
@@ -59,15 +31,14 @@ export default function SearchPage() {
     const arr = await getQuery();
     setIsLoading(false);
     setCards(arr);
-    console.log(cards);
   }
 
   function CreateCard(i: ICardData) {
     const isObjectEqual = (
-      obj1: { imageUrl: string | null },
+      card: { imageUrl: string | null },
       image: string
     ) => {
-      return obj1.imageUrl === image;
+      return card.imageUrl === image;
     };
 
     return (
@@ -84,18 +55,18 @@ export default function SearchPage() {
           </button>
           <button
             onClick={async () => {
-              !getFavs?.data?.some((item: { imageUrl: string | null }) =>
-                isObjectEqual(item, i.images.small)
+              !favs?.some((image: { imageUrl: string | null }) =>
+                isObjectEqual(image, i.images.small)
               )
-                ? addFav.mutate({ id: i.id, imageUrl: i.images.small })
-                : delFav.mutate(i.images.small);
+                ? [addFav(i.id, i.images.small), router.refresh()]
+                : [delFav(i.images.small), router.refresh()];
             }}
           >
-            {getFavs?.data?.some((item: { imageUrl: string | null }) =>
-              isObjectEqual(item, i.images.small)
+            {favs?.some((image: { imageUrl: string | null }) =>
+              isObjectEqual(image, i.images.small)
             )
               ? "❤️"
-              : "🤍"}{" "}
+              : "🤍"}
           </button>
         </div>
         <img

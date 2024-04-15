@@ -2,28 +2,17 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useRouter } from "next/navigation";
-import { trpc } from "../_trpc/client";
 import { useState } from "react";
-export default function DisplayFavs() {
+import { delFav } from "@/lib/actions";
+import { IFavCard } from "@/lib/types";
+
+export default function DisplayFavs({ favs }: any) {
   const router = useRouter();
-  const getFavs = trpc.getFavs.useQuery();
-  const delFav = trpc.delFav.useMutation({
-    onSuccess: () => {
-      getFavs.refetch();
-    },
-  });
-
-  interface IFavCard {
-    id?: number;
-    cardId?: string | null;
-    imageUrl?: string | null;
-  }
-
   function CreateCard(i: IFavCard) {
     function handleEnter() {
       setHoverStatus(true);
     }
-    function handelExit() {
+    function handleExit() {
       setHoverStatus(false);
     }
     const [hoverStatus, setHoverStatus] = useState(false);
@@ -41,9 +30,9 @@ export default function DisplayFavs() {
           </button>
           <button
             onMouseEnter={() => handleEnter()}
-            onMouseLeave={() => handelExit()}
+            onMouseLeave={() => handleExit()}
             onClick={async () => {
-              delFav.mutate(i.imageUrl || "");
+              delFav(i.imageUrl || ""), router.refresh();
             }}
           >
             {!hoverStatus ? "❤️" : "💔"}
@@ -60,25 +49,25 @@ export default function DisplayFavs() {
   }
 
   function FavCards() {
-    if (!getFavs.data) {
+    if (!favs) {
       return null;
     }
     let arr = [];
-    for (let i: number = 0; i < Object.values(getFavs.data).length; i++) {
-      arr.push(CreateCard(getFavs.data[i]));
+    for (let i: number = 0; i < Object.values(favs).length; i++) {
+      arr.push(CreateCard(favs[i]));
     }
     return arr;
   }
 
-  if (getFavs.status !== "success") {
-    return <>Loading...</>;
-  }
+  // if (getFavs) {
+  //   return <>Loading...</>;
+  // }
 
   return (
     <div className="w-screen h-fit">
       <div className="flex flex-col justify-center items-center">
         <div className="text-center">
-          {getFavs.data.length > 0 ? "" : "You haven't added any favorites"}
+          {favs.length > 0 ? "" : "You haven't added any favorites"}
         </div>
         <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-3 gap-2">
           <FavCards />

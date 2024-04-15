@@ -2,26 +2,8 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-interface ItcgSetData {
-  id: string;
-  name: string;
-  series: string;
-  images: {
-    symbol: string;
-    logo: string;
-  };
-  ptcgoCode?: string;
-  printedTotal: number;
-  total: number;
-  releaseDate: string;
-}
-interface ItcgSet {
-  tcgSets: {
-    data: ItcgSetData[];
-  };
-}
+import { ItcgSet, ItcgSetData } from "@/lib/types";
 export default function DisplaySets({ tcgSets }: ItcgSet) {
-  console.log(tcgSets.data);
   const [curView, setCurView] = useState(0);
   const tcgSetsByDate = tcgSets.data.sort((a: ItcgSetData, b: ItcgSetData) =>
     b.releaseDate.localeCompare(a.releaseDate)
