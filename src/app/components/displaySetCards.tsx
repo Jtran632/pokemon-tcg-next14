@@ -15,12 +15,6 @@ export default function DisplaySetCards({
   const router = useRouter();
   const [toggleType, setToggleType] = useState("");
   const supertypes: string[] = ["Pokémon", "Trainer", "Energy"];
-  // const cardsAscending = cards.sort((a: ICardData, b: ICardData) =>
-  //   a.number.localeCompare(b.number, undefined, {
-  //     numeric: true,
-  //     sensitivity: "base",
-  //   })
-  // );
   const isObjectEqual = (card: { imageUrl: string | null }, image: string) => {
     return card.imageUrl === image;
   };

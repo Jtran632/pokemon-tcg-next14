@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 import Link from "next/link";
-import Image from "next/image";
 export default function NavBar() {
   return (
     <div className="flex items-center justify-between">

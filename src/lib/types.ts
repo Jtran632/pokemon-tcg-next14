@@ -36,6 +36,7 @@ export interface ItcgSetData {
   total: number;
   releaseDate: string;
 }
+
 export interface ItcgSet {
   tcgSets: {
     data: ItcgSetData[];
