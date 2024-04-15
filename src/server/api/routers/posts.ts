@@ -1,3 +1,7 @@
+import {
+  FetchCreateContextFnOptions,
+  fetchRequestHandler,
+} from "@trpc/server/adapters/fetch";
 import { publicProcedure, createTRPCRouter } from "../trpc";
 import { eq } from "drizzle-orm";
 import { z } from "zod";

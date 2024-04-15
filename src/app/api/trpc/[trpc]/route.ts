@@ -1,6 +1,6 @@
+'use client'
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { postRouter } from "@/server/api/routers/posts";
-import { appRouter } from "@/server/api/root";
 import { type NextRequest } from "next/server";
 import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { Session } from "next-auth";
@@ -9,7 +9,7 @@ const handler = (req: NextRequest) =>
   fetchRequestHandler({
     endpoint: absoluteUrl() + "/api/trpc",
     req,
-    router: appRouter,
+    router: postRouter,
     createContext: function ():
       | {
           headers: Headers;
