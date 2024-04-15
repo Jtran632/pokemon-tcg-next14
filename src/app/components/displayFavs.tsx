@@ -31,7 +31,7 @@ export default function DisplayFavs({ favs }: any) {
           <button
             onMouseEnter={() => handleEnter()}
             onMouseLeave={() => handleExit()}
-            onClick={async () => {
+            onClick={() => {
               delFav(i.imageUrl || ""), router.refresh();
             }}
           >
