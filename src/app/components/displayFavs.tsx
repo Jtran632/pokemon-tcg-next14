@@ -9,7 +9,7 @@ export default function DisplayFavs({ favsData }: any) {
   // console.log(favs);
   const router = useRouter();
   const [favs, setFavs] = useState(favsData);
-  console.log(favs)
+  console.log(favs);
   function CreateCard({ card }: { card: IFavCard }) {
     function handleEnter() {
       setHoverStatus(true);
@@ -34,11 +34,7 @@ export default function DisplayFavs({ favsData }: any) {
             onMouseEnter={() => handleEnter()}
             onMouseLeave={() => handleExit()}
             onClick={async () => {
-              [
-                await delFav(card.imageUrl || ""),
-                setFavs(await getFavs()),
-                router.refresh()
-              ];
+              [await delFav(card.imageUrl || ""), setFavs(await getFavs())];
             }}
           >
             {!hoverStatus ? "❤️" : "💔"}
