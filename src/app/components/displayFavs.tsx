@@ -55,6 +55,9 @@ export default function DisplayFavs({ favs }: any) {
     ));
   }
 
+  if (!favs) {
+    return <div>Error something went wrong</div>;
+  }
   if (favs.length <= 0) {
     return (
       <div className="w-screen h-fit text-black">
