@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addFav, delFav } from "@/lib/actions";
 import { ICardData } from "@/lib/types";
+export const dynamic = "force-dynamic";
 export default function DisplaySearch({ favs }: any) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [cards, setCards] = useState<any[]>([]);
