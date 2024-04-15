@@ -62,7 +62,7 @@ export default function DisplayFavs({ favs }: any) {
     return (
       <div className="w-screen h-fit text-black">
         <div className="flex flex-col justify-center items-center">
-          You haven't added any favorites
+          {"You haven't added any favorites"}
         </div>
       </div>
     );
