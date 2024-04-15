@@ -4,10 +4,9 @@ import { postRouter } from "@/server/api/routers/posts";
 import { type NextRequest } from "next/server";
 import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { Session } from "next-auth";
-import { absoluteUrl } from "@/lib/utils";
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
-    endpoint: absoluteUrl() + "/api/trpc",
+    endpoint: "/api/trpc",
     req,
     router: postRouter,
     createContext: function ():
