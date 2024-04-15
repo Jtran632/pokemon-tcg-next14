@@ -55,9 +55,9 @@ export default function DisplayFavs({ favs }: any) {
     ));
   }
 
-  // if (getFavs) {
-  //   return <>Loading...</>;
-  // }
+  if (!favs) {
+    return <>Loading...</>;
+  }
 
   return (
     <div className="w-screen h-fit">
