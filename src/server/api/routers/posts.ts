@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/server";
 import { favCards, users } from "@/db/schema";
-export const dynamic = 'force-dynamic' 
+
 export const postRouter = createTRPCRouter({
   addUser: publicProcedure
     .input(z.object({ email: z.string(), password: z.string() }))

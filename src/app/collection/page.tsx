@@ -1,5 +1,6 @@
 import DisplayFavs from "@/app/components/displayFavs";
 import { getFavs } from "@/lib/actions";
+export const dynamic = "force-dynamic";
 export default async function Collection() {
   let favs = await getFavs();
   if (!favs) {
