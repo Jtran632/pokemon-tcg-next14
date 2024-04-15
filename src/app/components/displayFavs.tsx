@@ -9,6 +9,7 @@ export default function DisplayFavs({ favsData }: any) {
   // console.log(favs);
   const router = useRouter();
   const [favs, setFavs] = useState(favsData);
+  console.log(favs)
   function CreateCard({ card }: { card: IFavCard }) {
     function handleEnter() {
       setHoverStatus(true);
@@ -35,8 +36,8 @@ export default function DisplayFavs({ favsData }: any) {
             onClick={async () => {
               [
                 await delFav(card.imageUrl || ""),
-                await setFavs(getFavs()),
-                router.refresh(),
+                setFavs(await getFavs()),
+                router.refresh()
               ];
             }}
           >
