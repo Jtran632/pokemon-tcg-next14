@@ -2,13 +2,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Key, useState } from "react";
 import { delFav } from "@/lib/actions";
-import { IFavCard } from "@/lib/types";
+import { ICardData, IFavCard } from "@/lib/types";
 
 export default function DisplayFavs({ favs }: any) {
   const router = useRouter();
-  function CreateCard(i: IFavCard) {
+  function CreateCard({ card }: { card: IFavCard }) {
     function handleEnter() {
       setHoverStatus(true);
     }
@@ -19,12 +19,12 @@ export default function DisplayFavs({ favs }: any) {
     return (
       <div
         className="col-span-1 h-fit w-fit bg-black border rounded-b-xl rounded-t-md grid items-end"
-        key={i.id}
+        key={card.id}
       >
         <div className="flex justify-between px-1">
           <button
             className="text-white"
-            onClick={() => router.push(`/card/${i.cardId}`)}
+            onClick={() => router.push(`/card/${card.cardId}`)}
           >
             🔎
           </button>
@@ -32,7 +32,7 @@ export default function DisplayFavs({ favs }: any) {
             onMouseEnter={() => handleEnter()}
             onMouseLeave={() => handleExit()}
             onClick={() => {
-              delFav(i.imageUrl || ""), router.refresh();
+              [delFav(card.imageUrl || ""), router.refresh()];
             }}
           >
             {!hoverStatus ? "❤️" : "💔"}
@@ -40,7 +40,7 @@ export default function DisplayFavs({ favs }: any) {
         </div>
         <img
           className=""
-          src={i.imageUrl || ""}
+          src={card.imageUrl || ""}
           width={400}
           height={"auto"}
         ></img>
@@ -49,14 +49,9 @@ export default function DisplayFavs({ favs }: any) {
   }
 
   function FavCards() {
-    if (!favs) {
-      return null;
-    }
-    let arr = [];
-    for (let i: number = 0; i < Object.values(favs).length; i++) {
-      arr.push(CreateCard(favs[i]));
-    }
-    return arr;
+    return favs.map((card: { id: number }) => (
+      <CreateCard key={card.id} card={card} />
+    ));
   }
 
   // if (getFavs) {
