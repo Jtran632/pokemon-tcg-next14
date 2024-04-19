@@ -2,6 +2,7 @@ import DisplaySetCards from "@/app/components/displaySetCards";
 import { getFavs } from "@/lib/actions";
 import { ICardData } from "@/lib/types";
 import { getServerAuthSession } from "../../../../auth";
+export const dynamic = "force-dynamic";
 //scuffed solution but it works since all sets are less than 300 cards we can always do a promise.all for two pages
 //because api gives 250 max for a page biggest set is 287 cards
 async function getSetCards(id: string) {
