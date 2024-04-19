@@ -40,14 +40,20 @@ export default function DisplaySetCards({
                       isObjectEqual(image, card.images.small)
                     )
                       ? [
-                          addFav(
+                          await addFav(
                             card.id,
                             card.images.small,
                             String(session.data?.user.id)
                           ),
                           router.refresh(),
                         ]
-                      : [delFav(card.images.small, String(session.data?.user.id)), router.refresh()];
+                      : [
+                          await delFav(
+                            card.images.small,
+                            String(session.data?.user.id)
+                          ),
+                          router.refresh(),
+                        ];
                   }}
                 >
                   {favs?.some((image: { imageUrl: string | null }) =>
@@ -60,7 +66,7 @@ export default function DisplaySetCards({
                 <></>
               )}
             </div>
-            {/* <img
+            <img
               className="border-2 border-t-0 border-black rounded-b-xl bg-black"
               src={`${card.images.small}`}
               alt={"pokemon image"}
@@ -69,7 +75,7 @@ export default function DisplaySetCards({
               loading="lazy"
               placeholder={"/backCard.png"}
               onClick={() => router.push(`/card/${card.id}`)}
-            ></img> */}
+            ></img>
           </div>
         </div>
       );

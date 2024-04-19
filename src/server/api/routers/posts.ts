@@ -70,8 +70,8 @@ export const postRouter = createTRPCRouter({
         .delete(favCards)
         .where(
           and(
-            (eq(favCards.imageUrl, opts.input.imageUrl),
-            eq(favCards.userId, opts.input.userId))
+            eq(favCards.userId, opts.input.userId),
+            eq(favCards.imageUrl, opts.input.imageUrl)
           )
         );
     }),

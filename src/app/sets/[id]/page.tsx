@@ -23,7 +23,7 @@ export default async function SetPageWithName({ params }: any) {
 
   const favs = await getFavs(String(userId));
   let cards = await getSetCards(params.id);
-  //combine promise data into one array
+  // combine promise data into one array
   let allCards = [...cards[0].data, ...cards[1].data];
   const cardsAscending = allCards.sort((a: ICardData, b: ICardData) =>
     a.number.localeCompare(b.number, undefined, {
