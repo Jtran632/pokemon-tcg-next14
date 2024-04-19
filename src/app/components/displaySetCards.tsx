@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addFav, delFav } from "@/lib/actions";
 import { ICardData } from "@/lib/types";
+import { useSession } from "next-auth/react";
 
 export default function DisplaySetCards({
   cards,
@@ -13,6 +14,7 @@ export default function DisplaySetCards({
   favs: any;
 }) {
   const router = useRouter();
+  const session = useSession();
   const [toggleType, setToggleType] = useState("");
   const supertypes: string[] = ["Pokémon", "Trainer", "Energy"];
   const isObjectEqual = (card: { imageUrl: string | null }, image: string) => {
@@ -31,21 +33,32 @@ export default function DisplaySetCards({
               <div>
                 {card.number}/{card.set.total}
               </div>
-              <button
-                onClick={async () => {
-                  !favs?.some((image: { imageUrl: string | null }) =>
+              {session.data ? (
+                <button
+                  onClick={async () => {
+                    !favs?.some((image: { imageUrl: string | null }) =>
+                      isObjectEqual(image, card.images.small)
+                    )
+                      ? [
+                          addFav(
+                            card.id,
+                            card.images.small,
+                            String(session.data?.user.id)
+                          ),
+                          router.refresh(),
+                        ]
+                      : [delFav(card.images.small), router.refresh()];
+                  }}
+                >
+                  {favs?.some((image: { imageUrl: string | null }) =>
                     isObjectEqual(image, card.images.small)
                   )
-                    ? [addFav(card.id, card.images.small), router.refresh()]
-                    : [delFav(card.images.small), router.refresh()];
-                }}
-              >
-                {favs?.some((image: { imageUrl: string | null }) =>
-                  isObjectEqual(image, card.images.small)
-                )
-                  ? "❤️"
-                  : "🤍"}
-              </button>
+                    ? "❤️"
+                    : "🤍"}
+                </button>
+              ) : (
+                <></>
+              )}
             </div>
             <img
               className="border-2 border-t-0 border-black rounded-b-xl bg-black"

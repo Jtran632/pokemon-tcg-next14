@@ -1,8 +1,12 @@
 import DisplayFavs from "@/app/components/displayFavs";
 import { getFavs } from "@/lib/actions";
+import { getServerAuthSession } from "../../../auth";
 export const dynamic = "force-dynamic";
 export default async function Collection() {
-  let favs = await getFavs();
+  const session = await getServerAuthSession();
+  const userId = session?.user?.id || "";
+
+  const favs = await getFavs(String(userId));
   if (!favs) {
     <div>Loading...</div>;
   }

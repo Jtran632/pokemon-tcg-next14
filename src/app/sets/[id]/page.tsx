@@ -1,6 +1,7 @@
 import DisplaySetCards from "@/app/components/displaySetCards";
 import { getFavs } from "@/lib/actions";
 import { ICardData } from "@/lib/types";
+import { getServerAuthSession } from "../../../../auth";
 //scuffed solution but it works since all sets are less than 300 cards we can always do a promise.all for two pages
 //because api gives 250 max for a page biggest set is 287 cards
 async function getSetCards(id: string) {
@@ -17,7 +18,10 @@ async function getSetCards(id: string) {
 }
 
 export default async function SetPageWithName({ params }: any) {
-  let favs = await getFavs();
+  const session = await getServerAuthSession();
+  const userId = session?.user?.id || "";
+
+  const favs = await getFavs(String(userId));
   let cards = await getSetCards(params.id);
   //combine promise data into one array
   let allCards = [...cards[0].data, ...cards[1].data];

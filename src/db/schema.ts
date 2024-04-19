@@ -9,23 +9,27 @@ import {
   text,
   timestamp,
   varchar,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
-export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  email: text("email"),
-  password: text("password"),
+export const users = pgTable("user", {
+  id: varchar("id", { length: 255 }).notNull().primaryKey(),
+  email: varchar("email", { length: 255 }).notNull(),
+  name: varchar("name", {length: 255}),
+  password: varchar("password", { length: 255 }),
+  image: varchar("image", { length: 255 }),
+  emailVerified: boolean("emailVerified"),
 });
 
 export const favCards = pgTable("favCards", {
   id: serial("id").primaryKey(),
   cardId: text("cardId"),
   imageUrl: text("imageUrl"),
-  userId: integer("userId").references(() => users.id),
+  userId: varchar("userId", { length: 255 }).references(() => users.id),
 });
 
-export const createTable = pgTableCreator((name) => `test_${name}`);
+export const createTable = pgTableCreator((name) => `${name}`);
 export const accounts = createTable(
   "account",
   {

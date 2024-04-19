@@ -5,9 +5,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addFav, delFav } from "@/lib/actions";
+import { useSession } from "next-auth/react";
 import { ICardData } from "@/lib/types";
 export const dynamic = "force-dynamic";
 export default function DisplaySearch({ favs }: any) {
+  const session = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [cards, setCards] = useState<any[]>([]);
   const [query, setQuery] = useState("");
@@ -54,21 +56,28 @@ export default function DisplaySearch({ favs }: any) {
           >
             🔎
           </button>
-          <button
-            onClick={async () => {
-              !favs?.some((image: { imageUrl: string | null }) =>
+          {session.data ? (
+            <button
+              onClick={async () => {
+                !favs?.some((image: { imageUrl: string | null }) =>
+                  isObjectEqual(image, i.images.small)
+                )
+                  ? [
+                      addFav(i.id, i.images.small, String(session.data.user.id)),
+                      router.refresh(),
+                    ]
+                  : [delFav(i.images.small), router.refresh()];
+              }}
+            >
+              {favs?.some((image: { imageUrl: string | null }) =>
                 isObjectEqual(image, i.images.small)
               )
-                ? [addFav(i.id, i.images.small), router.refresh()]
-                : [delFav(i.images.small), router.refresh()];
-            }}
-          >
-            {favs?.some((image: { imageUrl: string | null }) =>
-              isObjectEqual(image, i.images.small)
-            )
-              ? "❤️"
-              : "🤍"}
-          </button>
+                ? "❤️"
+                : "🤍"}
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
         <img
           src={i.images.small || ""}
