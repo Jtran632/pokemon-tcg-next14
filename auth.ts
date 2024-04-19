@@ -40,9 +40,9 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       name?: string | null | undefined;
-      email?: string | null | undefined;
+      email: string;
       image?: string | null | undefined;
-      id?: string | null | undefined;
+      id: string;
     } & DefaultSession["user"];
   }
 

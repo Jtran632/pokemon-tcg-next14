@@ -10,9 +10,7 @@ import { useSession } from "next-auth/react";
 export default function DisplayFavs({ favs }: any) {
   const router = useRouter();
   const session = useSession();
-  if(!session.data){
-    router.push('/')
-  }
+  console.log(session)
   function CreateCard({ card }: { card: IFavCard }) {
     function handleEnter() {
       setHoverStatus(true);
@@ -37,7 +35,10 @@ export default function DisplayFavs({ favs }: any) {
             onMouseEnter={() => handleEnter()}
             onMouseLeave={() => handleExit()}
             onClick={async () => {
-              [delFav(card.imageUrl || ""), router.refresh()];
+              [
+                delFav(card.imageUrl || "", String(session.data?.user.id)),
+                router.refresh(),
+              ];
             }}
           >
             {!hoverStatus ? "❤️" : "💔"}
@@ -62,15 +63,15 @@ export default function DisplayFavs({ favs }: any) {
   if (!favs) {
     return <div>Error something went wrong</div>;
   }
-  if (favs.length <= 0) {
-    return (
-      <div className="w-screen h-fit text-black">
-        <div className="flex flex-col justify-center items-center">
-          {"You haven't added any favorites"}
-        </div>
-      </div>
-    );
-  }
+  // if (favs.length <= 0) {
+  //   return (
+  //     <div className="w-screen h-fit text-black">
+  //       <div className="flex flex-col justify-center items-center">
+  //         {"You haven't added any favorites"}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="w-screen h-fit">

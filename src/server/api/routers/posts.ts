@@ -1,5 +1,5 @@
 import { publicProcedure, createTRPCRouter } from "../trpc";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/server";
 import { favCards, users } from "@/db/schema";
@@ -64,9 +64,16 @@ export const postRouter = createTRPCRouter({
       }
     ),
   delFav: publicProcedure
-    .input(z.string())
-    .mutation(async (opts: { input: string }) => {
-      await db.delete(favCards).where(eq(favCards.imageUrl, opts.input));
+    .input(z.object({ imageUrl: z.string(), userId: z.string() }))
+    .mutation(async (opts: { input: { imageUrl: string; userId: string } }) => {
+      await db
+        .delete(favCards)
+        .where(
+          and(
+            (eq(favCards.imageUrl, opts.input.imageUrl),
+            eq(favCards.userId, opts.input.userId))
+          )
+        );
     }),
 });
 

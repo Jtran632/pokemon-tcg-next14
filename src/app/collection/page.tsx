@@ -4,15 +4,29 @@ import { getServerAuthSession } from "../../../auth";
 export const dynamic = "force-dynamic";
 export default async function Collection() {
   const session = await getServerAuthSession();
-  const userId = session?.user?.id || "";
-
-  const favs = await getFavs(String(userId));
-  if (!favs) {
-    <div>Loading...</div>;
+  let favs: {
+    id: number;
+    cardId: string | null;
+    imageUrl: string | null;
+    userId: string | null;
+  }[] = [];
+  if (session) {
+    const userId = session.user.id;
+    favs = await getFavs(userId);
+  } else {
+    favs = [];
   }
-  return (
-    <div className="flex min-h-screen w-full px-20 sm:px-10 xs:px-10 py-10 text-black bg-white">
-      <DisplayFavs favs={favs} />
-    </div>
-  );
+  if (session?.user.id) {
+    return (
+      <div className="flex min-h-screen w-full px-20 sm:px-10 xs:px-10 py-10 text-black bg-white">
+        <DisplayFavs favs={favs} />
+      </div>
+    );
+  } else {
+    return (
+      <div className="flex justify-center min-h-screen w-full px-20 sm:px-10 xs:px-10 py-10 text-black text-center bg-white">
+        Please log in to view collection
+      </div>
+    );
+  }
 }

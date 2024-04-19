@@ -63,10 +63,17 @@ export default function DisplaySearch({ favs }: any) {
                   isObjectEqual(image, i.images.small)
                 )
                   ? [
-                      addFav(i.id, i.images.small, String(session.data.user.id)),
+                      addFav(
+                        i.id,
+                        i.images.small,
+                        String(session.data.user.id)
+                      ),
                       router.refresh(),
                     ]
-                  : [delFav(i.images.small), router.refresh()];
+                  : [
+                      delFav(i.images.small, String(session.data.user.id)),
+                      router.refresh(),
+                    ];
               }}
             >
               {favs?.some((image: { imageUrl: string | null }) =>
