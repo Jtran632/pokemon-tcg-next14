@@ -1,7 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-
-// import { trpc } from "../_trpc/client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addFav, delFav } from "@/lib/actions";
@@ -21,6 +19,7 @@ export default function DisplaySearch({ favs }: any) {
       `https://api.pokemontcg.io/v2/cards?q=name:*${query}*&orderBy=-set.releaseDate`
     );
     const res = await response.json();
+    console.log(res.data);
     return res.data;
   }
   async function onSubmit(event: { preventDefault: () => void }) {
@@ -36,61 +35,52 @@ export default function DisplaySearch({ favs }: any) {
     setCards(arr);
   }
 
-  function CreateCard({ i }: { i: ICardData }) {
-    const isObjectEqual = (
-      card: { imageUrl: string | null },
-      image: string
-    ) => {
-      return card.imageUrl === image;
-    };
+  const isObjectEqual = (card: { imageUrl: string | null }, image: string) => {
+    return card.imageUrl === image;
+  };
 
-    return (
+  let isFavorite = (card: ICardData) => {
+    return favs?.some((image: { imageUrl: string | null }) =>
+      isObjectEqual(image, card.images.small)
+    );
+  };
+
+  const handleFavorite = async (card: ICardData) => {
+    try {
+      if (!isFavorite(card)) {
+        addFav(card.id, card.images.small, String(session?.data?.user.id));
+      } else {
+        delFav(card.images.small, String(session?.data?.user.id));
+      }
+      router.refresh();
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  };
+
+  function CardDisplay() {
+    return cards.map((card) => (
       <div
         className="col-span-1 h-fit w-fit bg-black border rounded-b-xl rounded-t-md grid items-end"
-        key={i.id}
+        key={card.id}
       >
         <div className="flex justify-between px-1">
           <button
             className="text-white"
-            onClick={() => router.push(`/card/${i.id}`)}
+            onClick={() => router.push(`/card/${card.id}`)}
           >
             🔎
           </button>
-          {session.data ? (
-            <button
-              onClick={async () => {
-                !favs?.some((image: { imageUrl: string | null }) =>
-                  isObjectEqual(image, i.images.small)
-                )
-                  ? [
-                      await addFav(
-                        i.id,
-                        i.images.small,
-                        String(session.data.user.id)
-                      ),
-                      router.refresh(),
-                    ]
-                  : [
-                      await delFav(
-                        i.images.small,
-                        String(session.data.user.id)
-                      ),
-                      router.refresh(),
-                    ];
-              }}
-            >
-              {favs?.some((image: { imageUrl: string | null }) =>
-                isObjectEqual(image, i.images.small)
-              )
-                ? "❤️"
-                : "🤍"}
+          {session.data?.user.id ? (
+            <button onClick={() => handleFavorite(card)}>
+              {isFavorite(card) ? "❤️" : "🤍"}
             </button>
           ) : (
             <></>
           )}
         </div>
         <img
-          src={i.images.small || ""}
+          src={card.images.small || ""}
           alt={"pokemon image"}
           width={400}
           height={"auto"}
@@ -98,11 +88,7 @@ export default function DisplaySearch({ favs }: any) {
           placeholder={"/backCard.png"}
         ></img>
       </div>
-    );
-  }
-
-  function CardSearchDisplay() {
-    return cards.map((card) => <CreateCard key={card.id} i={card} />);
+    ));
   }
 
   return (
@@ -136,7 +122,7 @@ export default function DisplaySearch({ favs }: any) {
           <div className="pt-10">Searching for cards that include: {query}</div>
         ) : (
           <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-3 gap-2 pt-10">
-            <CardSearchDisplay />
+            <CardDisplay />
           </div>
         )}
       </div>

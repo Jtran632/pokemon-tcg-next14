@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 export default function DisplayFavs({ favs }: any) {
   const router = useRouter();
   const session = useSession();
-  console.log(session)
+  console.log(session);
   function CreateCard({ card }: { card: IFavCard }) {
     function handleEnter() {
       setHoverStatus(true);
@@ -63,7 +63,7 @@ export default function DisplayFavs({ favs }: any) {
   if (!favs) {
     return <div>Error something went wrong</div>;
   }
-  
+
   if (favs.length <= 0) {
     return (
       <div className="w-screen h-fit text-black">
@@ -78,10 +78,10 @@ export default function DisplayFavs({ favs }: any) {
     <div className="w-screen h-fit">
       <div className="flex flex-col justify-center items-center">
         <div className="text-black font-bold">
-          Showing collection of user with email/id - [{" "}
-          {session.data?.user.email} | {session.data?.user.id} ]
+          {/* Showing collection of user with email/id - [{" "}
+          {session.data?.user.email} | {session.data?.user.id} ] */}
         </div>
-        <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-3 gap-2">
+        <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 gap-2">
           <FavCards />
         </div>
       </div>
