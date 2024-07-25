@@ -4,7 +4,6 @@ import { postRouter } from "@/server/api/routers/posts";
 import { type NextRequest } from "next/server";
 import { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { Session } from "next-auth";
-export const maxDuration = 30;
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
     endpoint: "/api/trpc",
