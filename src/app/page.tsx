@@ -4,7 +4,7 @@ import { getServerAuthSession } from "../../auth";
 import DisplaySearch from "./components/displaySearch";
 import { getFavs } from "@/lib/actions";
 // export const dynamic = "force-dynamic";
-export const maxDuration = 30;
+export const maxDuration = 60;
 export default async function Home() {
   const session = await getServerAuthSession();
   const userId = session?.user?.id || "";
