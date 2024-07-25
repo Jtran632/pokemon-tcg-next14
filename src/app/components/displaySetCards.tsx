@@ -73,7 +73,7 @@ export default function DisplaySetCards({
 
   function DisplaySetCards() {
     return (
-      <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 gap-2">
+      <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 gap-2 ">
         {cards
           .filter((card) => toggleType === "" || card.supertype === toggleType)
           .map((card) => (
@@ -81,7 +81,7 @@ export default function DisplaySetCards({
               whileInView={{
                 opacity: [0, 1],
                 scale: [0.5, 1],
-                transition: { duration: 0.25 },
+                transition: { duration: 0.1 },
               }}
               key={card.id}
               className="flex justify-center items-center"
@@ -122,6 +122,7 @@ export default function DisplaySetCards({
         <img
           src={"https://media.tenor.com/fSsxftCb8w0AAAAi/pikachu-running.gif"}
           width={100}
+          alt="loading"
         ></img>
       </div>
     );

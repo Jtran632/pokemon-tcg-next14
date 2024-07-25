@@ -8,6 +8,7 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
   const tcgSetsByDate = tcgSets.data.sort((a: ItcgSetData, b: ItcgSetData) =>
     b.releaseDate.localeCompare(a.releaseDate)
   );
+  console.log(tcgSetsByDate)
   function MapSets() {
     return (
       <>
@@ -20,7 +21,7 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
               >
                 <div className="flex flex-col justify-between items-center text-xs h-28 w-full">
                   <img
-                    src={`${i.images.logo}`}
+                    src={i.images.logo}
                     className="w-fit h-1/2 items-end"
                     alt={"set"}
                   ></img>
@@ -43,7 +44,7 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
                   <div>{i?.releaseDate}</div>
                   <div>{i?.ptcgoCode}</div>
                   <img
-                    src={`${i.images.symbol}`}
+                    src={i.images.symbol}
                     alt={"set"}
                     width={30}
                     height={40}
