@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { addFav, delFav } from "@/lib/actions";
 import { useSession } from "next-auth/react";
 import { ICardData } from "@/lib/types";
+import { motion } from "framer-motion";
 export const dynamic = "force-dynamic";
 export default function DisplaySearch({ favs }: any) {
   const session = useSession();
@@ -60,7 +61,12 @@ export default function DisplaySearch({ favs }: any) {
 
   function CardDisplay() {
     return cards.map((card) => (
-      <div
+      <motion.div
+      whileInView={{
+        opacity: [0, 1],
+        scale: [0.5, 1],
+        transition: { duration: 0.1 },
+      }}
         className="col-span-1 h-fit w-fit bg-black border rounded-b-xl rounded-t-md grid items-end"
         key={card.id}
       >
@@ -87,7 +93,7 @@ export default function DisplaySearch({ favs }: any) {
           loading="lazy"
           placeholder={"/backCard.png"}
         ></img>
-      </div>
+      </motion.div>
     ));
   }
 
