@@ -1,8 +1,8 @@
 import DisplaySetCards from "@/app/components/displaySetCards";
 import { getFavs } from "@/lib/actions";
 import { getServerAuthSession } from "../../../../auth";
-// export const dynamic = "force-dynamic";
-
+export const dynamic = "force-dynamic";
+export const maxDuration = 30;
 export default async function SetPageWithName({ params }: any) {
   const session = await getServerAuthSession();
   const userId = session?.user?.id || "";

@@ -1,5 +1,6 @@
 import DisplaySets from "../components/displaySets";
 export const dynamic = "force-dynamic";
+export const maxDuration = 30;
 async function getSets() {
   const a = fetch("https://api.pokemontcg.io/v2/sets");
   return (await a).json();
