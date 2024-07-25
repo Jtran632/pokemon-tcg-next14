@@ -1,7 +1,6 @@
 import DisplaySetCards from "@/app/components/displaySetCards";
 import { getFavs } from "@/lib/actions";
 import { getServerAuthSession } from "../../../../auth";
-import { Suspense } from "react";
 export const dynamic = "force-dynamic";
 
 export default async function SetPageWithName({ params }: any) {
