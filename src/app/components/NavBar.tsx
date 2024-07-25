@@ -7,7 +7,7 @@ export default async function NavBar() {
     <div>
       <div className="flex items-center justify-between">
         <img
-          className="-rotate-12 sm:w-[50px]"
+          className="-rotate-12 sm:w-[50px] xl:w-[75px] flex justify-center"
           src={"/icon.png"}
           alt="header image"
           width={100}
@@ -19,7 +19,6 @@ export default async function NavBar() {
           {session ? <Link href={"/collection"}>Collection</Link> : <></>}
           <Link href={"/login"}>{!session ? "Login" : "Sign Out"}</Link>
         </div>
-        <div></div>
       </div>
       {session ? (
         <div className="text-center text-[10px]">{session?.user.email}</div>

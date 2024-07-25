@@ -1,7 +1,7 @@
 import DisplaySets from "../components/displaySets";
-export const dynamic = "force-dynamic";
+//no-store because force-dynamic is bugged on set page not getting latest sets
 async function getSets() {
-  const a = fetch("https://api.pokemontcg.io/v2/sets");
+  const a = fetch("https://api.pokemontcg.io/v2/sets", { cache: "no-store" });
   return (await a).json();
 }
 

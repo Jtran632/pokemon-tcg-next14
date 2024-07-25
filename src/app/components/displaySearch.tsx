@@ -28,7 +28,7 @@ export default function DisplaySearch({ favs }: any) {
       setErrorMessage("Please enter in something ");
       return;
     }
-    setIsLoading(true); // Set loading to true when the request starts
+    setIsLoading(true);
     setErrorMessage("");
     const arr = await getQuery();
     setIsLoading(false);
