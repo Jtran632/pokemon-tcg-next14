@@ -8,8 +8,7 @@
     "start": "next start",
     "generate": "drizzle-kit generate:pg",
     "introspect": "drizzle-kit introspect:pg",
-    "lint": "next lint",
-    "analyze": "ANALYZE=true next build"
+    "lint": "next lint"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^0.9.0",
