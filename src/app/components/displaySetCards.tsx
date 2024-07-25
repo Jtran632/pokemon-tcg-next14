@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { addFav, delFav } from "@/lib/actions";
 import { ICardData } from "@/lib/types";
 import { useSession } from "next-auth/react";
-import { motion } from "framer-motion";
 export default function DisplaySetCards({
   id,
   favs,
@@ -77,12 +76,7 @@ export default function DisplaySetCards({
         {cards
           .filter((card) => toggleType === "" || card.supertype === toggleType)
           .map((card) => (
-            <motion.div
-              whileInView={{
-                opacity: [0, 1],
-                scale: [0.5, 1],
-                transition: { duration: 0.1 },
-              }}
+            <div
               key={card.id}
               className="flex justify-center items-center"
             >
@@ -111,7 +105,7 @@ export default function DisplaySetCards({
                   onClick={() => router.push(`/card/${card.id}`)}
                 ></img>
               </div>
-            </motion.div>
+            </div>
           ))}
       </div>
     );
