@@ -9,9 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Pokemon TCG Viewer",
   description: "View all pokemon card sets",
-  icons: {
-    icon: "/next.svg",
-  },
+  // icons: {
+  //   icon: "/next.svg",
+  // },
 };
 
 export default function RootLayout({
