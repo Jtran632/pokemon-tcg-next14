@@ -129,7 +129,26 @@ export default function DisplaySetCards({
     router,
     session?.data?.user,
   ]);
-
+  const handleToggleType = useCallback(
+    (type: string) => {
+      setToggleType(toggleType === type ? "" : type);
+    },
+    [toggleType]
+  );
+  const DisplayOptions = useMemo(() => {
+    return supertypes.map((type) => (
+      <button
+        key={type}
+        value={type}
+        className={`border border-black px-3 mb-6 rounded-md font-bold ${
+          toggleType === type ? "bg-emerald-300 " : " bg-white"
+        }`}
+        onClick={() => handleToggleType(type)}
+      >
+        {type}
+      </button>
+    ));
+  }, [supertypes, toggleType]);
   function Loading() {
     return (
       <div className="flex flex-col justify-center items-center text-2xl text-black">
@@ -148,18 +167,7 @@ export default function DisplaySetCards({
       ) : (
         <div>
           <div className="flex justify-center gap-6 sm:gap-4 xs:gap-4 text-black">
-            {supertypes.map((type) => (
-              <button
-                key={type}
-                value={type}
-                className={`border border-black px-3 mb-6 rounded-md font-bold ${
-                  toggleType === type ? "bg-emerald-300 " : " bg-white"
-                }`}
-                onClick={() => setToggleType(toggleType === type ? "" : type)}
-              >
-                {type}
-              </button>
-            ))}
+            {DisplayOptions}
           </div>
           {DisplaySetCards}
         </div>
