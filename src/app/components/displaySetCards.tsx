@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { addFav, delFav } from "@/lib/actions";
 import { ICardData } from "@/lib/types";
@@ -59,20 +59,23 @@ export default function DisplaySetCards({
     return card.imageUrl === image;
   };
 
-  const handleFavorite = async (card: ICardData) => {
-    try {
-      if (session?.data?.user) {
-        if (!isFavorite(card)) {
-          addFav(card.id, card.images.small, String(session?.data?.user.id));
-        } else {
-          delFav(card.images.small, String(session?.data?.user.id));
+  const handleFavorite = useCallback(
+    async (card: ICardData) => {
+      try {
+        if (session?.data?.user) {
+          if (!isFavorite(card)) {
+            addFav(card.id, card.images.small, String(session?.data?.user.id));
+          } else {
+            delFav(card.images.small, String(session?.data?.user.id));
+          }
+          router.refresh();
         }
-        router.refresh();
+      } catch (error) {
+        console.error("Error toggling favorite:", error);
       }
-    } catch (error) {
-      console.error("Error toggling favorite:", error);
-    }
-  };
+    },
+    [isFavorite, router, session?.data?.user]
+  );
 
   const DisplaySetCards = useMemo(() => {
     return (
@@ -118,7 +121,14 @@ export default function DisplaySetCards({
           ))}
       </div>
     );
-  }, [cards, toggleType, isFavorite, router, session?.data?.user]);
+  }, [
+    cards,
+    toggleType,
+    isFavorite,
+    handleFavorite,
+    router,
+    session?.data?.user,
+  ]);
 
   function Loading() {
     return (
