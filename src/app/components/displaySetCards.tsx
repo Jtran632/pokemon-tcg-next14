@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { addFav, delFav } from "@/lib/actions";
 import { ICardData } from "@/lib/types";
@@ -47,11 +47,13 @@ export default function DisplaySetCards({
     fetchCards();
   }, [id]);
 
-  let isFavorite = (card: ICardData) => {
-    return favs?.some((image: { imageUrl: string | null }) =>
-      isObjectEqual(image, card.images.small)
-    );
-  };
+  let isFavorite = useMemo(() => {
+    return (card: ICardData) => {
+      return favs?.some((image: { imageUrl: string | null }) =>
+        isObjectEqual(image, card.images.small)
+      );
+    };
+  }, [favs]);
 
   const isObjectEqual = (card: { imageUrl: string | null }, image: string) => {
     return card.imageUrl === image;
@@ -72,7 +74,7 @@ export default function DisplaySetCards({
     }
   };
 
-  function DisplaySetCards() {
+  const DisplaySetCards = useMemo(() => {
     return (
       <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 gap-2 ">
         {cards
@@ -116,7 +118,8 @@ export default function DisplaySetCards({
           ))}
       </div>
     );
-  }
+  }, [cards, toggleType, isFavorite, router, session?.data?.user]);
+
   function Loading() {
     return (
       <div className="flex flex-col justify-center items-center text-2xl text-black">
@@ -148,7 +151,7 @@ export default function DisplaySetCards({
               </button>
             ))}
           </div>
-          <DisplaySetCards />
+          {DisplaySetCards}
         </div>
       )}
     </>
