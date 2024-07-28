@@ -165,7 +165,7 @@ export default function DisplaySetCards({
       {isLoading ? (
         <Loading />
       ) : (
-        <div>
+        <div className="xs:px-0 px-44">
           <div className="flex justify-center gap-6 sm:gap-4 xs:gap-4 text-black">
             {DisplayOptions}
           </div>
