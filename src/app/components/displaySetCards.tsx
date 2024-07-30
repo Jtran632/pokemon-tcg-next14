@@ -6,49 +6,46 @@ import { addFav, delFav } from "@/lib/actions";
 import { ICardData } from "@/lib/types";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
-interface DisplaySetCardsProps {
-  id: string;
-  favs: any;
-  cardData?: ICardData[];
-}
 export default function DisplaySetCards({
   id,
   favs,
-  cardData,
-}: DisplaySetCardsProps) {
+}: {
+  id: string;
+  favs: any;
+}) {
   const router = useRouter();
   const session = useSession();
   const [toggleType, setToggleType] = useState("");
-  const [cards, setCards] = useState<ICardData[] | undefined>(cardData);
+  const [cards, setCards] = useState<ICardData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const supertypes: string[] = ["Pokémon", "Trainer", "Energy"];
 
-  // useEffect(() => {
-  //   async function fetchCards() {
-  //     try {
-  //       setIsLoading(true);
-  //       let url1 = `https://api.pokemontcg.io/v2/cards?q=set.id:${id}&pageSize=250&page=1`;
-  //       let url2 = `https://api.pokemontcg.io/v2/cards?q=set.id:${id}&pageSize=250&page=2`;
-  //       let urls = [url1, url2];
+  useEffect(() => {
+    async function fetchCards() {
+      try {
+        setIsLoading(true);
+        let url1 = `https://api.pokemontcg.io/v2/cards?q=set.id:${id}&pageSize=250&page=1`;
+        let url2 = `https://api.pokemontcg.io/v2/cards?q=set.id:${id}&pageSize=250&page=2`;
+        let urls = [url1, url2];
 
-  //       const responses = await Promise.all(urls.map((url) => fetch(url)));
-  //       const data = await Promise.all(responses.map((resp) => resp.json()));
-  //       const allCards = [...data[0].data, ...data[1].data];
-  //       const sortedCards = allCards.sort((a: ICardData, b: ICardData) =>
-  //         a.number.localeCompare(b.number, undefined, {
-  //           numeric: true,
-  //           sensitivity: "base",
-  //         })
-  //       );
-  //       setCards(sortedCards);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       console.error("Error fetching cards:", error);
-  //     }
-  //   }
+        const responses = await Promise.all(urls.map((url) => fetch(url)));
+        const data = await Promise.all(responses.map((resp) => resp.json()));
+        const allCards = [...data[0].data, ...data[1].data];
+        const sortedCards = allCards.sort((a: ICardData, b: ICardData) =>
+          a.number.localeCompare(b.number, undefined, {
+            numeric: true,
+            sensitivity: "base",
+          })
+        );
+        setCards(sortedCards);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching cards:", error);
+      }
+    }
 
-  //   fetchCards();
-  // }, [id]);
+    fetchCards();
+  }, [id]);
 
   let isFavorite = useMemo(() => {
     return (card: ICardData) => {
@@ -83,48 +80,45 @@ export default function DisplaySetCards({
   const DisplaySetCards = useMemo(() => {
     return (
       <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 gap-2 ">
-        {cards &&
-          cards
-            .filter(
-              (card) => toggleType === "" || card.supertype === toggleType
-            )
-            .map((card) => (
-              <motion.div
-                whileInView={{
-                  opacity: [0, 1],
-                  scale: [0.5, 1],
-                  transition: { duration: 0.1 },
-                }}
-                key={card.id}
-                className="flex justify-center items-center"
+        {cards
+          .filter((card) => toggleType === "" || card.supertype === toggleType)
+          .map((card) => (
+            <motion.div
+              whileInView={{
+                opacity: [0, 1],
+                scale: [0.5, 1],
+                transition: { duration: 0.1 },
+              }}
+              key={card.id}
+              className="flex justify-center items-center"
+            >
+              <div
+                id={card.id}
+                className={`text-black hover:rounded-md hover:bg-gradient-to-r from-red-300 via-green-300 to-blue-300 p-1`}
+                data-supertype={card.supertype}
               >
-                <div
-                  id={card.id}
-                  className={`text-black hover:rounded-md hover:bg-gradient-to-r from-red-300 via-green-300 to-blue-300 p-1`}
-                  data-supertype={card.supertype}
-                >
-                  <div className="flex justify-between px-1 border-2 border-b-0 border-black rounded-t-md bg-black text-white">
-                    <div>
-                      {card.number}/{card.set.total}
-                    </div>
-                    {session?.data?.user && (
-                      <button onClick={() => handleFavorite(card)}>
-                        {isFavorite(card) ? "❤️" : "🤍"}
-                      </button>
-                    )}
+                <div className="flex justify-between px-1 border-2 border-b-0 border-black rounded-t-md bg-black text-white">
+                  <div>
+                    {card.number}/{card.set.total}
                   </div>
-                  <img
-                    className="border-2 border-t-0 border-black rounded-b-xl bg-black"
-                    src={card.images.small}
-                    alt={"pokemon image"}
-                    width={400}
-                    height={"auto"}
-                    loading="lazy"
-                    onClick={() => router.push(`/card/${card.id}`)}
-                  ></img>
+                  {session?.data?.user && (
+                    <button onClick={() => handleFavorite(card)}>
+                      {isFavorite(card) ? "❤️" : "🤍"}
+                    </button>
+                  )}
                 </div>
-              </motion.div>
-            ))}
+                <img
+                  className="border-2 border-t-0 border-black rounded-b-xl bg-black"
+                  src={card.images.small}
+                  alt={"pokemon image"}
+                  width={400}
+                  height={"auto"}
+                  loading="lazy"
+                  onClick={() => router.push(`/card/${card.id}`)}
+                ></img>
+              </div>
+            </motion.div>
+          ))}
       </div>
     );
   }, [
