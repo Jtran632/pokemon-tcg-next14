@@ -134,7 +134,7 @@ export default function DisplaySearch({ favs }: any) {
         {isLoading ? (
           <div className="pt-10">Searching for cards that include: {query}</div>
         ) : (
-          <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-3 gap-2 pt-10">
+          <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-3 gap-2 pt-10 xs:px-0 px-44">
             {CardDisplay}
           </div>
         )}
