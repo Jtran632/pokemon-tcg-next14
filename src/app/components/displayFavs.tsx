@@ -81,7 +81,7 @@ export default function DisplayFavs({ favs }: any) {
           {/* Showing collection of user with email/id - [{" "}
           {session.data?.user.email} | {session.data?.user.id} ] */}
         </div>
-        <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 gap-2 xs:px-0 px-44">
+        <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 gap-2">
           <FavCards />
         </div>
       </div>
