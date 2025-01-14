@@ -8,7 +8,7 @@ export default async function SetPageWithName({ params }: any) {
   const userId = session?.user?.id || "";
   const favs = await getFavs(String(userId));
   return (
-    <div className="bg-white min-h-screen h-full py-10 px-20 sm:px-10 xs:px-10">
+    <div className="bg-white min-h-screen h-full py-10">
       <DisplaySetCards id={params.id} favs={favs} />
     </div>
   );

@@ -79,7 +79,7 @@ export default function DisplaySetCards({
 
   const DisplaySetCards = useMemo(() => {
     return (
-      <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 gap-2 ">
+      <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 gap-2 px-20 lg:px-8 md:px-6 sm:px-4 xs:px-0">
         {cards
           .filter((card) => toggleType === "" || card.supertype === toggleType)
           .map((card) => (
@@ -165,12 +165,12 @@ export default function DisplaySetCards({
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="xs:px-0 px-44">
+        <>
           <div className="flex justify-center gap-6 sm:gap-4 xs:gap-4 text-black">
             {DisplayOptions}
           </div>
           {DisplaySetCards}
-        </div>
+        </>
       )}
     </>
   );

@@ -18,7 +18,7 @@ export default async function Collection() {
   }
   if (session?.user.id) {
     return (
-      <div className="flex min-h-screen w-full sm:px-10 xs:px-10 px-44 py-10 text-black bg-white">
+      <div className="flex min-h-screen w-full px-20 lg:px-8 md:px-6 sm:px-4 xs:px-0 py-10 text-black bg-white">
         <DisplayFavs favs={favs} />
       </div>
     );
