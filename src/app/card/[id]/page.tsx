@@ -10,7 +10,7 @@ export default async function SetPageWithCardName({
 }: {
   params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
   let i = await getCard(id);
   return (
     <div>
