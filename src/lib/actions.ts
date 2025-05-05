@@ -1,5 +1,5 @@
 "use server";
-import { api } from "../../server/trpc/server";
+import { api } from "../server/trpc/server";
 export async function getFavs(q: string) {
   return await api.post.getFavs(q);
 }
