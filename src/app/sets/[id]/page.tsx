@@ -6,7 +6,7 @@ export const maxDuration = 60;
 export default async function SetPageWithName({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const session = await getServerAuthSession();
   const userId = session?.user?.id || "";
