@@ -1,6 +1,6 @@
 import { postRouter } from "./routers/posts";
-import { createTRPCRouter } from "../api/trpc";
-import { createCallerFactory } from "../../server/api/trpc";
+import { createTRPCRouter } from "./trpc";
+import { createCallerFactory } from "./trpc";
 
 export const appRouter = createTRPCRouter({
   post: postRouter,

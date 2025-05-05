@@ -1,7 +1,7 @@
 import { publicProcedure, createTRPCRouter } from "../trpc";
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
-import { db } from "@/server";
+import { db } from "@/app/api/server";
 import { favCards, users } from "@/db/schema";
 
 export const postRouter = createTRPCRouter({
