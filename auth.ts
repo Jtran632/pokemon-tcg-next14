@@ -9,7 +9,7 @@ import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import { db } from "@/app/api/server";
 import bcrypt from "bcrypt";
-import { api } from "@/app/api/server/trpc/server";
+import { api } from "@/app/server";
 
 async function getUser(email: string): Promise<any | null> {
   try {
