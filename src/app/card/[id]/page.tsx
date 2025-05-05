@@ -4,12 +4,10 @@ async function getCard(id: string) {
   const a = await fetch(url);
   return a.json();
 }
-
-export default async function SetPageWithCardName({
-  params,
-}: {
+type PageProps = {
   params: { id: string };
-}) {
+};
+export default async function SetPageWithCardName({ params }: PageProps) {
   const { id } = params;
   let i = await getCard(id);
   return (
