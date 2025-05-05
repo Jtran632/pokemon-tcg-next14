@@ -11,7 +11,7 @@ export default async function SetPageWithName({
   const session = await getServerAuthSession();
   const userId = session?.user?.id || "";
   const favs = await getFavs(userId);
-  const { id } = await params;
+  const { id } = params;
   return (
     <div className="bg-white min-h-screen h-full py-10">
       <DisplaySetCards id={id} favs={favs} />

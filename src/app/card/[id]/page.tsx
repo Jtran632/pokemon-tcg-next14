@@ -1,16 +1,21 @@
 import DisplayCardInfo from "@/app/components/displayCardInfo";
 export const dynamic = "force-dynamic";
 async function getCard(id: string) {
-  let url = `https://api.pokemontcg.io/v2/cards/${id}`;
-  const a = await fetch(url);
-  return a.json();
+  const res = await fetch(`https://api.pokemontcg.io/v2/cards/${id}`);
+  if (!res.ok) throw new Error("Failed to fetch card");
+  return res.json();
 }
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
+export default async function SetPageWithCardName({ params }: PageProps) {
+  const cardData = await getCard(params.id);
 
-export default async function SetPageWithCardName({ params }: { params: any }) {
-  let i = await getCard(params.id);
   return (
     <div>
-      <DisplayCardInfo card={i.data} />
+      <DisplayCardInfo card={cardData.data} />
     </div>
   );
 }
