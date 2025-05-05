@@ -98,7 +98,6 @@ export default function DisplaySearch({ favs }: any) {
           width={400}
           height={"auto"}
           loading="lazy"
-          placeholder={"/backCard.png"}
         ></img>
       </motion.div>
     ));

@@ -1,18 +1,17 @@
-import "server-only";
-
+"use server";
 import { headers } from "next/headers";
 import { cache } from "react";
-
 import { createCaller } from "../api/root";
 import { createTRPCContext } from "../api/trpc";
 
-export const createContext = cache(() => {
-  const heads = new Headers(headers());
-  heads.set("x-trpc-source", "rsc");
+export const createContext = cache(async () => {
+  const heads = await headers();
+  const headerInstance = new Headers(heads);
+  headerInstance.set("x-trpc-source", "rsc");
 
   return createTRPCContext({
-    headers: heads,
+    headers: headerInstance,
   });
 });
-// @ts-ignore
+
 export const api = createCaller(createContext);
