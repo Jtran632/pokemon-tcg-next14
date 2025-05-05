@@ -1,0 +1,51 @@
+{
+  "name": "pokemon-tcg-next15",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "generate": "drizzle-kit generate:pg",
+    "introspect": "drizzle-kit introspect:pg",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@auth/drizzle-adapter": "^0.9.0",
+    "@jridgewell/sourcemap-codec": "^1.4.15",
+    "@next/bundle-analyzer": "^14.2.3",
+    "@next/env": "^14.2.1",
+    "@rollup/plugin-inject": "^5.0.5",
+    "@tanstack/react-query": "^5.75.2",
+    "@trpc/client": "^11.1.2",
+    "@trpc/react-query": "^11.1.2",
+    "@trpc/server": "^11.1.2",
+    "autoprefixer": "10.4.16",
+    "bcrypt": "^5.1.1",
+    "better-sqlite3": "^9.1.1",
+    "clsx": "^2.1.0",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.43.1",
+    "framer-motion": "^11.3.17",
+    "next": "^15.3.1",
+    "next-auth": "^4.24.7",
+    "node": "^21.1.0",
+    "pg": "^8.15.6",
+    "postcss": "^8.4.31",
+    "postgres": "^3.4.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "server-only": "^0.0.1",
+    "superjson": "^2.2.1",
+    "tailwindcss": "3.3.5",
+    "typescript": "^5.8.3",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.14",
+    "@types/react": "^19.1.2",
+    "drizzle-kit": "^0.31.1",
+    "eslint": "^9.26.0",
+    "tsx": "^4.19.4"
+  }
+}
