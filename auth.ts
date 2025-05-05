@@ -7,9 +7,8 @@ import {
 import { type Adapter } from "next-auth/adapters";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
-import { db } from "@/app/api/server";
-import bcrypt from "bcrypt";
-import { api } from "@/app/server";
+import { db } from "./server";
+import { api } from "./server/trpc/server";
 
 async function getUser(email: string): Promise<any | null> {
   try {

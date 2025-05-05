@@ -1,9 +1,8 @@
-'use server'
+"use server";
 import { headers } from "next/headers";
 import { cache } from "react";
-
-import { createCaller } from "./api/server/api/root";
-import { createTRPCContext } from "./api/server/api/trpc";
+import { createCaller } from "../api/root";
+import { createTRPCContext } from "../api/trpc";
 
 export const createContext = cache(async () => {
   const heads = await headers();
