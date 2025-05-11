@@ -1,5 +1,5 @@
 {
-  "name": "pokemon-tcg-next14",
+  "name": "pokemon-tcg-next15",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -22,7 +22,6 @@
     "@trpc/next": "^10.45.2",
     "@trpc/react-query": "^10.43.6",
     "@trpc/server": "^10.43.6",
-    "@types/bcrypt": "^5.0.2",
     "@types/better-sqlite3": "^7.6.7",
     "@types/node": "20.9.2",
     "@types/react": "^18.2.37",
@@ -52,6 +51,6 @@
   },
   "devDependencies": {
     "drizzle-kit": "^0.20.14",
-    "eslint": "^8.54.0"
+    "eslint": "^9.26.0"
   }
 }

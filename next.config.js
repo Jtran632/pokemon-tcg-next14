@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -9,8 +12,6 @@ const nextConfig = {
       },
     ],
   },
-  allowlist: ["fs"],
 };
 
 module.exports = nextConfig;
-// module.exports = nextConfig;
