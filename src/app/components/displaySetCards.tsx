@@ -148,7 +148,7 @@ export default function DisplaySetCards({
         {type}
       </button>
     ));
-  }, [supertypes, toggleType]);
+  }, [supertypes, toggleType, handleToggleType]);
   function Loading() {
     return (
       <div className="flex flex-col justify-center items-center text-2xl text-black">
