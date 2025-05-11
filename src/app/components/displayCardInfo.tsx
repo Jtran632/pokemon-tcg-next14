@@ -1,5 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+
+import { JSX } from "react";
+
 export default function DisplayCardInfo({ card }: any) {
   function GetTCGPlayerPrices() {
     let p = card?.tcgplayer?.prices;
