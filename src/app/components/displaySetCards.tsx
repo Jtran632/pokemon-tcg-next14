@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { addFav, delFav } from "@/lib/actions";
 import { ICardData } from "@/lib/types";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
+import DisplayCardInfoModal from "./displayCardInfoModal";
 export default function DisplaySetCards({
   id,
   favs,
@@ -17,8 +18,11 @@ export default function DisplaySetCards({
   const session = useSession();
   const [toggleType, setToggleType] = useState("");
   const [cards, setCards] = useState<ICardData[]>([]);
+  const [curCard, setCurCard] = useState<ICardData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const supertypes: string[] = ["Pokémon", "Trainer", "Energy"];
+  const supertypes: string[] = useMemo(() => {
+    return ["Pokémon", "Trainer", "Energy"];
+  }, []);
 
   useEffect(() => {
     async function fetchCards() {
@@ -46,6 +50,24 @@ export default function DisplaySetCards({
 
     fetchCards();
   }, [id]);
+  const [position, setPosition] = useState(0);
+  const scrollPosRef = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      scrollPosRef.current = window.scrollY;
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (curCard === null) {
+      window.scrollTo(0, position);
+    }
+  }, [curCard, position]);
 
   let isFavorite = useMemo(() => {
     return (card: ICardData) => {
@@ -76,7 +98,6 @@ export default function DisplaySetCards({
     },
     [isFavorite, router, session?.data?.user]
   );
-
   const DisplaySetCards = useMemo(() => {
     return (
       <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 gap-2 px-20 lg:px-8 md:px-6 sm:px-4 xs:px-0">
@@ -92,43 +113,41 @@ export default function DisplaySetCards({
               key={card.id}
               className="flex justify-center items-center"
             >
-              <div
-                id={card.id}
-                className={`text-black hover:rounded-md hover:bg-gradient-to-r from-red-300 via-green-300 to-blue-300 p-1`}
-                data-supertype={card.supertype}
-              >
-                <div className="flex justify-between px-1 border-2 border-b-0 border-black rounded-t-md bg-black text-white">
-                  <div>
-                    {card.number}/{card.set.total}
-                  </div>
-                  {session?.data?.user && (
-                    <button onClick={() => handleFavorite(card)}>
-                      {isFavorite(card) ? "❤️" : "🤍"}
-                    </button>
-                  )}
+            <div
+              key={card.id}
+              id={card.id}
+              className={`text-black hover:rounded-md hover:bg-gradient-to-r from-red-300 via-green-300 to-blue-300 p-1`}
+              data-supertype={card.supertype}
+            >
+              <div className="flex justify-between px-1 border-2 border-b-0 border-black rounded-t-md bg-black text-white">
+                <div>
+                  {card.number}/{card.set.total}
                 </div>
-                <img
-                  className="border-2 border-t-0 border-black rounded-b-xl bg-black"
-                  src={card.images.small}
-                  alt={"pokemon image"}
-                  width={400}
-                  height={"auto"}
-                  loading="lazy"
-                  onClick={() => router.push(`/card/${card.id}`)}
-                ></img>
+                {session?.data?.user && (
+                  <button onClick={() => handleFavorite(card)}>
+                    {isFavorite(card) ? "❤️" : "🤍"}
+                  </button>
+                )}
               </div>
+              <img
+                className="border-2 border-t-0 border-black rounded-b-xl bg-black"
+                src={card.images.small}
+                alt={"pokemon image"}
+                width={400}
+                height={"auto"}
+                loading="lazy"
+                // onClick={() => router.push(`/card/${card.id}`)}
+                onClick={() => [
+                  setCurCard(card),
+                  setPosition(scrollPosRef.current),
+                ]}
+              ></img>
+            </div>
             </motion.div>
           ))}
       </div>
     );
-  }, [
-    cards,
-    toggleType,
-    isFavorite,
-    handleFavorite,
-    router,
-    session?.data?.user,
-  ]);
+  }, [cards, toggleType, isFavorite, handleFavorite, session?.data?.user]);
   const handleToggleType = useCallback(
     (type: string) => {
       setToggleType(toggleType === type ? "" : type);
@@ -166,10 +185,17 @@ export default function DisplaySetCards({
         <Loading />
       ) : (
         <>
-          <div className="flex justify-center gap-6 sm:gap-4 xs:gap-4 text-black">
-            {DisplayOptions}
+          <div className={`${curCard ? "hidden" : ""} overflow-y-hidden`}>
+            <div className="flex justify-center gap-6 sm:gap-4 xs:gap-4 text-black">
+              {DisplayOptions}
+            </div>
+            {DisplaySetCards}
           </div>
-          {DisplaySetCards}
+          {curCard && (
+            <div className="flex justify-center scrollbar-none">
+              <DisplayCardInfoModal card={curCard} setCurCard={setCurCard} />
+            </div>
+          )}
         </>
       )}
     </>

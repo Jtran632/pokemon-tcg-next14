@@ -8,7 +8,7 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
   const tcgSetsByDate = tcgSets.data.sort((a: ItcgSetData, b: ItcgSetData) =>
     b.releaseDate.localeCompare(a.releaseDate)
   );
-  console.log(tcgSetsByDate)
+  // console.log(tcgSetsByDate)
   function MapSets() {
     return (
       <>

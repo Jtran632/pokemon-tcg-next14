@@ -1,4 +1,3 @@
-"use client";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { postRouter } from "@/server/api/routers/posts";
 import { type NextRequest } from "next/server";

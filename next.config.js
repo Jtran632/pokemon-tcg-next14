@@ -9,7 +9,8 @@ const nextConfig = {
       },
     ],
   },
+  allowlist: ["fs"],
 };
 
-module.exports = nextConfig
+module.exports = nextConfig;
 // module.exports = nextConfig;
