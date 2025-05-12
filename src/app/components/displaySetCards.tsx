@@ -113,36 +113,36 @@ export default function DisplaySetCards({
               key={card.id}
               className="flex justify-center items-center"
             >
-            <div
-              key={card.id}
-              id={card.id}
-              className={`text-black hover:rounded-md hover:bg-gradient-to-r from-red-300 via-green-300 to-blue-300 p-1`}
-              data-supertype={card.supertype}
-            >
-              <div className="flex justify-between px-1 border-2 border-b-0 border-black rounded-t-md bg-black text-white">
-                <div>
-                  {card.number}/{card.set.total}
+              <div
+                key={card.id}
+                id={card.id}
+                className={`text-black hover:rounded-md hover:bg-gradient-to-r from-red-300 via-green-300 to-blue-300 p-1`}
+                data-supertype={card.supertype}
+              >
+                <div className="flex justify-between px-1 border-2 border-b-0 border-black rounded-t-md bg-black text-white">
+                  <div>
+                    {card.number}/{card.set.total}
+                  </div>
+                  {session?.data?.user && (
+                    <button onClick={() => handleFavorite(card)}>
+                      {isFavorite(card) ? "❤️" : "🤍"}
+                    </button>
+                  )}
                 </div>
-                {session?.data?.user && (
-                  <button onClick={() => handleFavorite(card)}>
-                    {isFavorite(card) ? "❤️" : "🤍"}
-                  </button>
-                )}
+                <img
+                  className="border-2 border-t-0 border-black rounded-b-xl bg-black"
+                  src={card.images.small}
+                  alt={"pokemon image"}
+                  width={400}
+                  height={"auto"}
+                  loading="lazy"
+                  // onClick={() => router.push(`/card/${card.id}`)}
+                  onClick={() => [
+                    setCurCard(card),
+                    setPosition(scrollPosRef.current),
+                  ]}
+                ></img>
               </div>
-              <img
-                className="border-2 border-t-0 border-black rounded-b-xl bg-black"
-                src={card.images.small}
-                alt={"pokemon image"}
-                width={400}
-                height={"auto"}
-                loading="lazy"
-                // onClick={() => router.push(`/card/${card.id}`)}
-                onClick={() => [
-                  setCurCard(card),
-                  setPosition(scrollPosRef.current),
-                ]}
-              ></img>
-            </div>
             </motion.div>
           ))}
       </div>

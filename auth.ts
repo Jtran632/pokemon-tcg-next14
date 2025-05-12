@@ -8,24 +8,21 @@ import { type Adapter } from "next-auth/adapters";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import { db } from "@/server";
-import { api } from "@/server/trpc/server";
-
-async function getUser(email: string): Promise<any | null> {
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
+async function fetchUser(email: string): Promise<any | null> {
   try {
-    const userResponse = await api.post.getUser(email);
-    if (!userResponse) {
-      console.error("User not found.");
-      return null;
-    } else {
-      const userData = userResponse[0];
-      return userData;
-    }
+    const userResponse = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
+    return userResponse[0];
   } catch (error) {
     console.error("Error fetching user:", error);
     return null;
   }
 }
-
 // declare module "next-auth" {
 //   interface Session extends DefaultSession {
 //     user: {
@@ -115,9 +112,17 @@ export const authOptions: NextAuthOptions = {
             password: z.string().min(6),
           })
           .safeParse(credentials);
+        // console.log(
+        //   "logging in with",
+        //   parsedCredentials.data?.email,
+        //   parsedCredentials.data?.password
+        // );
         if (parsedCredentials.success) {
+          // console.log("here");
           const { email, password } = parsedCredentials.data;
-          const user = await getUser(email);
+          const user = await fetchUser(email);
+
+          console.log("user", user);
           if (!user) return null;
           //couldnt get bcrypt to work so using simple compare as placeholder
           if (password === user.password) {
@@ -138,5 +143,4 @@ export const authOptions: NextAuthOptions = {
   ],
 };
 
-export const getServerAuthSession = () =>
-  getServerSession(authOptions);
+export const getServerAuthSession = () => getServerSession(authOptions);
