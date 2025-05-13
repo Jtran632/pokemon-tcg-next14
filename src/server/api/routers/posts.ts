@@ -1,36 +1,46 @@
-import { publicProcedure, createTRPCRouter } from "../trpc";
-import { and, eq } from "drizzle-orm";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { db } from "@/server";
-import { favCards, users } from "@/db/schema";
+import { users, favCards } from "@/db/schema";
+import { and, eq } from "drizzle-orm";
 
 export const postRouter = createTRPCRouter({
-  // addUser: publicProcedure
-  //   .input(z.object({ email: z.string(), password: z.string() }))
-  //   .mutation(
-  //     async (opts: {
-  //       input: {
-  //         email: string;
-  //         password: string;
-  //       };
-  //     }) => {
-  //       await db
-  //         .insert(users)
-  //         .values({ email: opts.input.email, password: opts.input.password });
-  //     }
-  //   ),
-  getUser: publicProcedure
-    .input(z.string())
-    .query(async (opts: { input: string }) => {
-      return await db.select().from(users).where(eq(users.email, opts.input));
+  hello: publicProcedure
+    .input(
+      z.object({
+        text: z.string(),
+      })
+    )
+    .query((opts: { input: { text: any } }) => {
+      return {
+        greeting: `hello ${opts.input.text}`,
+      };
     }),
+  getUser: publicProcedure.input(z.string()).query(async ({ input }) => {
+    const user = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, input))
+      .limit(1);
+    return user;
+  }),
   getFavs: publicProcedure
     .input(z.string())
     .query(async (opts: { input: string }) => {
-      return await db
+      const favs = await db
         .select()
         .from(favCards)
         .where(eq(favCards.userId, opts.input));
+      return z
+        .array(
+          z.object({
+            id: z.number(),
+            cardId: z.string(),
+            imageUrl: z.string(),
+            userId: z.string(),
+          })
+        )
+        .parse(favs);
     }),
   getUserFavs: publicProcedure
     .input(z.string())
@@ -50,11 +60,7 @@ export const postRouter = createTRPCRouter({
     )
     .mutation(
       async (opts: {
-        input: {
-          id: string;
-          imageUrl: string;
-          userId: string;
-        };
+        input: { id: string; imageUrl: string; userId: string };
       }) => {
         await db.insert(favCards).values({
           cardId: opts.input.id,
@@ -70,11 +76,11 @@ export const postRouter = createTRPCRouter({
         .delete(favCards)
         .where(
           and(
-            eq(favCards.userId, opts.input.userId),
-            eq(favCards.imageUrl, opts.input.imageUrl)
+            eq(favCards.imageUrl, opts.input.imageUrl),
+            eq(favCards.userId, opts.input.userId)
           )
         );
     }),
 });
 
-export type PostRouter = typeof postRouter;
+export type AppRouter = typeof postRouter;

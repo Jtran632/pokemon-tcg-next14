@@ -101,7 +101,7 @@ export default function DisplaySearch({ favs }: any) {
         ></img>
       </motion.div>
     ));
-  }, [cards, isFavorite, router, session.data?.user.id]);
+  }, [cards, isFavorite, handleFavorite, router, session.data?.user.id]);
 
   return (
     <div className="flex flex-col items-center">
