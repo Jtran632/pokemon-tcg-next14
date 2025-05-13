@@ -12,7 +12,7 @@ export default function DisplaySetCards({
   favs,
 }: {
   id: string;
-  favs: any;
+  favs: { id: number; cardId: string; imageUrl: string; userId: string }[];
 }) {
   const router = useRouter();
   const session = useSession();
@@ -20,6 +20,8 @@ export default function DisplaySetCards({
   const [cards, setCards] = useState<ICardData[]>([]);
   const [curCard, setCurCard] = useState<ICardData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [position, setPosition] = useState(0);
+  const scrollPosRef = useRef(0);
   const supertypes: string[] = useMemo(() => {
     return ["Pokémon", "Trainer", "Energy"];
   }, []);
@@ -50,8 +52,6 @@ export default function DisplaySetCards({
 
     fetchCards();
   }, [id]);
-  const [position, setPosition] = useState(0);
-  const scrollPosRef = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -136,7 +136,6 @@ export default function DisplaySetCards({
                   width={400}
                   height={"auto"}
                   loading="lazy"
-                  // onClick={() => router.push(`/card/${card.id}`)}
                   onClick={() => [
                     setCurCard(card),
                     setPosition(scrollPosRef.current),

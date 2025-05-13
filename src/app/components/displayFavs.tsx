@@ -10,7 +10,6 @@ import { useSession } from "next-auth/react";
 export default function DisplayFavs({ favs }: any) {
   const router = useRouter();
   const session = useSession();
-  console.log(session);
   function CreateCard({ card }: { card: IFavCard }) {
     function handleEnter() {
       setHoverStatus(true);

@@ -6,7 +6,7 @@ import { JSX, useEffect } from "react";
 export default function DisplayCardInfoModal({ card, setCurCard }: any) {
   useEffect(() => {
     scrollTo(0, 0);
-  })
+  });
   function GetTCGPlayerPrices() {
     let p = card?.tcgplayer?.prices;
     let k = Object.keys(p);
@@ -73,16 +73,23 @@ export default function DisplayCardInfoModal({ card, setCurCard }: any) {
     return arr;
   }
   return (
-    <div className="h-full bg-white text-black p-20 border-4 border-slate-200 w-full ">
-      <button onClick={() => [setCurCard(null)]}>close</button>
-      <div className="flex lg:grid gap-20 justify-center">
+    <div className="bg-white text-black border-4 border-slate-200">
+      <div className="flex justify-end p-1">
+        <button
+          className="border-2 border-slate-200 p-1 rounded-md "
+          onClick={() => [setCurCard(null)]}
+        >
+          Close
+        </button>
+      </div>
+      <div className="flex lg:grid gap-20 justify-center p-10">
         <img
           src={`${card.images.large}`}
           alt={"pokemon image"}
           width={400}
           height={"auto"}
           loading="lazy"
-          className={`flex rounded-md transition duration-500 hover:scale-125 `}
+          className={`flex rounded-md transition duration-500 hover:scale-110`}
         ></img>
         <div className="border-black">
           {card?.tcgplayer?.prices ? (

@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { addFav, delFav } from "@/lib/actions";
 import { useSession } from "next-auth/react";
 import { ICardData } from "@/lib/types";
 import { motion } from "framer-motion";
+import DisplayCardInfoModal from "./displayCardInfoModal";
 export const dynamic = "force-dynamic";
 export default function DisplaySearch({ favs }: any) {
   const session = useSession();
@@ -14,13 +15,29 @@ export default function DisplaySearch({ favs }: any) {
   const [query, setQuery] = useState("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const router = useRouter();
-  // useEffect(() => {}, [favs]);
+  const [position, setPosition] = useState(0);
+  const scrollPosRef = useRef(0);
+  const [curCard, setCurCard] = useState<ICardData | null>(null);
+  useEffect(() => {
+    const handleScroll = () => {
+      scrollPosRef.current = window.scrollY;
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (curCard === null) {
+      window.scrollTo(0, position);
+    }
+  }, [curCard, position]);
   async function getQuery() {
     const response = await fetch(
       `https://api.pokemontcg.io/v2/cards?q=name:*${query}*&orderBy=-set.releaseDate`
     );
     const res = await response.json();
-    console.log(res.data);
     return res.data;
   }
   async function onSubmit(event: { preventDefault: () => void }) {
@@ -80,7 +97,10 @@ export default function DisplaySearch({ favs }: any) {
         <div className="flex justify-between px-1">
           <button
             className="text-white"
-            onClick={() => router.push(`/card/${card.id}`)}
+            onClick={() => [
+              setCurCard(card),
+              setPosition(scrollPosRef.current),
+            ]}
           >
             🔎
           </button>
@@ -101,12 +121,22 @@ export default function DisplaySearch({ favs }: any) {
         ></img>
       </motion.div>
     ));
-  }, [cards, isFavorite, handleFavorite, router, session.data?.user.id]);
+  }, [
+    cards,
+    isFavorite,
+    handleFavorite,
+    setCurCard,
+    setPosition,
+    router,
+    session.data?.user.id,
+  ]);
 
   return (
     <div className="flex flex-col items-center">
       <form
-        className="flex justify-between  text-black border-2 border-black"
+        className={`${
+          curCard ? "hidden" : ""
+        } flex justify-between  text-black border-2 border-black`}
         onSubmit={onSubmit}
       >
         <input
@@ -129,13 +159,24 @@ export default function DisplaySearch({ favs }: any) {
         </button>
       </form>
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-      <div>
+      <div className="flex flex-col items-center w-full h-full">
         {isLoading ? (
           <div className="pt-10">Searching for cards that include: {query}</div>
         ) : (
-          <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 gap-2 px-20 lg:px-8 md:px-6 sm:px-4 xs:px-0">
-            {CardDisplay}
-          </div>
+          <>
+            <div
+              className={`${
+                curCard ? "hidden" : ""
+              } grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 gap-2 px-20 lg:px-8 md:px-6 sm:px-4 xs:px-0`}
+            >
+              {CardDisplay}
+            </div>
+            {curCard && (
+              <div className="flex justify-center scrollbar-none w-full h-full">
+                <DisplayCardInfoModal card={curCard} setCurCard={setCurCard} />
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
