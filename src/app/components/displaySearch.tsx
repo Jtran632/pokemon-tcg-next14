@@ -91,34 +91,33 @@ export default function DisplaySearch({ favs }: any) {
           scale: [0.5, 1],
           transition: { duration: 0.1 },
         }}
-        className="col-span-1 h-fit w-fit bg-black border rounded-b-xl rounded-t-md grid items-end"
+        className="col-span-1 h-fit w-fit rounded-b-xl rounded-t-md grid items-end"
         key={card.id}
       >
-        <div className="flex justify-between px-1">
-          <button
-            className="text-white"
-            onClick={() => [
-              setCurCard(card),
-              setPosition(scrollPosRef.current),
-            ]}
-          >
-            🔎
-          </button>
+        <div className="flex justify-between px-2 rounded-t-md bg-black">
           {session.data?.user.id ? (
-            <button onClick={() => handleFavorite(card)}>
-              {isFavorite(card) ? "❤️" : "🤍"}
-            </button>
+            <div className="flex justify-end w-full">
+              <button onClick={() => handleFavorite(card)}>
+                {isFavorite(card) ? "❤️" : "🤍"}
+              </button>
+            </div>
           ) : (
             <></>
           )}
         </div>
-        <img
-          src={card.images.small || ""}
-          alt={"pokemon image"}
-          width={400}
-          height={"auto"}
-          loading="lazy"
-        ></img>
+        <div className="bg-black rounded-b-full">
+          <img
+            src={card.images.large || card.images.small || ""}
+            alt={"pokemon image"}
+            width={400}
+            height={"auto"}
+            loading="lazy"
+            onClick={() => [
+              setCurCard(card),
+              setPosition(scrollPosRef.current),
+            ]}
+          ></img>
+        </div>
       </motion.div>
     ));
   }, [
@@ -167,7 +166,7 @@ export default function DisplaySearch({ favs }: any) {
             <div
               className={`${
                 curCard ? "hidden" : ""
-              } grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 gap-2 px-20 lg:px-8 md:px-6 sm:px-4 xs:px-0`}
+              } grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 gap-2 py-2`}
             >
               {CardDisplay}
             </div>

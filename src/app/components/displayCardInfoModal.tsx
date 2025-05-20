@@ -1,13 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import Link from "next/link";
 import { JSX, useEffect } from "react";
 
 export default function DisplayCardInfoModal({ card, setCurCard }: any) {
   useEffect(() => {
     scrollTo(0, 0);
   });
+  const curUrl = new URL(window.location.href);
+  console.log(curUrl);
   function GetTCGPlayerPrices() {
+    console.log(card);
     let p = card?.tcgplayer?.prices;
     let k = Object.keys(p);
     const arr: JSX.Element[] = [
@@ -75,6 +79,16 @@ export default function DisplayCardInfoModal({ card, setCurCard }: any) {
   return (
     <div className="bg-white text-black border-4 border-slate-200">
       <div className="flex justify-end p-1">
+        {curUrl.href.includes(card.set.id) ? (
+          <></>
+        ) : (
+          <Link href={"/sets/" + card.set.id}>
+            <button className="border-2 border-slate-200 p-1 rounded-md ">
+              {" "}
+              Set{" "}
+            </button>
+          </Link>
+        )}
         <button
           className="border-2 border-slate-200 p-1 rounded-md "
           onClick={() => [setCurCard(null)]}

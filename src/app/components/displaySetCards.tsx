@@ -119,7 +119,7 @@ export default function DisplaySetCards({
                 className={`text-black hover:rounded-md hover:bg-gradient-to-r from-red-300 via-green-300 to-blue-300 p-1`}
                 data-supertype={card.supertype}
               >
-                <div className="flex justify-between px-1 border-2 border-b-0 border-black rounded-t-md bg-black text-white">
+                <div className="flex justify-between px-2 rounded-t-md bg-black text-white">
                   <div>
                     {card.number}/{card.set.total}
                   </div>
@@ -129,18 +129,19 @@ export default function DisplaySetCards({
                     </button>
                   )}
                 </div>
-                <img
-                  className="border-2 border-t-0 border-black rounded-b-xl bg-black"
-                  src={card.images.small}
-                  alt={"pokemon image"}
-                  width={400}
-                  height={"auto"}
-                  loading="lazy"
-                  onClick={() => [
-                    setCurCard(card),
-                    setPosition(scrollPosRef.current),
-                  ]}
-                ></img>
+                <div className="bg-black rounded-full rounded-t-none">
+                  <img
+                    src={card.images.large || card.images.small || ""}
+                    alt={"pokemon image"}
+                    width={400}
+                    height={"auto"}
+                    loading="lazy"
+                    onClick={() => [
+                      setCurCard(card),
+                      setPosition(scrollPosRef.current),
+                    ]}
+                  ></img>
+                </div>
               </div>
             </motion.div>
           ))}

@@ -8,7 +8,7 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
   const tcgSetsByDate = tcgSets.data.sort((a: ItcgSetData, b: ItcgSetData) =>
     b.releaseDate.localeCompare(a.releaseDate)
   );
-  // console.log(tcgSetsByDate)
+  // console.log(tcgSetsByDate);
   function MapSets() {
     return (
       <>
@@ -42,6 +42,7 @@ export default function DisplaySets({ tcgSets }: ItcgSet) {
                     {i?.total}
                   </div>
                   <div>{i?.releaseDate}</div>
+                  <div>{i.id.toUpperCase()}</div>
                   <div>{i?.ptcgoCode}</div>
                   <img
                     src={i.images.symbol}

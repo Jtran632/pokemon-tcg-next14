@@ -20,10 +20,10 @@ export default function DisplayFavs({ favs }: any) {
     const [hoverStatus, setHoverStatus] = useState(false);
     return (
       <div
-        className="col-span-1 h-fit w-fit bg-black border rounded-b-xl rounded-t-md grid items-end"
+        className="col-span-1 h-fit w-fit   border-gray-600 rounded-xl grid items-end"
         key={card.id}
       >
-        <div className="flex justify-between px-1">
+        <div className="flex justify-between px-2 rounded-t-md bg-black text-white">
           <button
             className="text-white"
             onClick={() => router.push(`/card/${card.cardId}`)}
@@ -43,12 +43,14 @@ export default function DisplayFavs({ favs }: any) {
             {!hoverStatus ? "❤️" : "💔"}
           </button>
         </div>
-        <img
-          className=""
-          src={card.imageUrl || ""}
-          width={400}
-          height={"auto"}
-        ></img>
+        <div className="bg-black rounded-b-full">
+          <img
+            className=""
+            src={card.imageUrl || ""}
+            width={400}
+            height={"auto"}
+          ></img>
+        </div>
       </div>
     );
   }
