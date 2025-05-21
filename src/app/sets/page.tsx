@@ -1,12 +1,7 @@
+import { getSets } from "@/lib/utils";
 import DisplaySets from "../components/displaySets";
 // export const dynamic = "force-dynamic";
-export const maxDuration = 60;
-async function getSets() {
-  const a = fetch("https://api.pokemontcg.io/v2/sets", {
-    next: { revalidate: 3600 },
-  });
-  return (await a).json();
-}
+// export const maxDuration = 60;
 
 export default async function Home() {
   let a = await getSets();

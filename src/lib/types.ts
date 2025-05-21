@@ -14,6 +14,7 @@ export interface ICardData {
   supertype: string;
   name: string;
   number: string;
+  rarity: string;
 }
 
 export interface IFavCard {

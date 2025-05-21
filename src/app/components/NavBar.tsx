@@ -13,10 +13,11 @@ export default async function NavBar() {
           width={100}
           height={"auto"}
         ></img>
-        <div className="flex w-full place-content-between justify-center text-6xl lg:text-4xl md:text-3xl sm:text-2xl xs:text-base gap-10 sm:gap-4 p-4">
+        <div className="flex w-full place-content-between justify-center text-3xl lg:text-3xl md:text-3xl sm:text-xl xs:text-base gap-10 sm:gap-4 p-4">
           <Link href={"/"}>Home </Link>
           <Link href={"/sets"}>Sets</Link>
           {session ? <Link href={"/collection"}>Collection</Link> : <></>}
+          <Link href={"/simulation"}>Packs</Link>
           <Link href={"/login"}>{!session ? "Login" : "Sign Out"}</Link>
         </div>
       </div>
