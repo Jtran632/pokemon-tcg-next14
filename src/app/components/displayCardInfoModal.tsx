@@ -78,23 +78,25 @@ export default function DisplayCardInfoModal({ card, setCurCard }: any) {
   }
   return (
     <div className="bg-white text-black border-4 border-slate-200">
-      <div className="flex justify-end p-1">
-        {curUrl.href.includes(card.set.id) ? (
-          <></>
-        ) : (
-          <Link href={"/sets/" + card.set.id}>
-            <button className="border-2 border-slate-200 p-1 rounded-md ">
-              {" "}
-              Set{" "}
-            </button>
-          </Link>
-        )}
-        <button
-          className="border-2 border-slate-200 p-1 rounded-md "
-          onClick={() => [setCurCard(null)]}
-        >
-          Close
-        </button>
+      <div className="flex flex-col justify-end text-right p-1">
+        <div className="flex justify-end p-1">
+          {curUrl.href.includes(card.set.id) ? (
+            <></>
+          ) : (
+            <Link href={"/sets/" + card.set.id}>
+              <button className="border-2 border-slate-200 p-1 rounded-md ">
+                Set
+              </button>
+            </Link>
+          )}
+          <button
+            className="border-2 border-slate-200 p-1 rounded-md "
+            onClick={() => [setCurCard(null)]}
+          >
+            Close
+          </button>
+        </div>
+        <div className="font-bold">{card.set.name}</div>
       </div>
       <div className="flex lg:grid gap-20 justify-center p-10">
         <img

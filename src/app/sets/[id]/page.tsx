@@ -13,7 +13,7 @@ export default async function SetPageWithName({
   const favs = await getFavs(userId);
   const { id } = await params;
   return (
-    <div className="bg-white min-h-screen h-full py-10">
+    <div className="bg-white min-h-screen h-full py-4">
       <DisplaySetCards id={id} favs={favs} />
     </div>
   );

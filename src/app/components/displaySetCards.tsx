@@ -22,6 +22,7 @@ export default function DisplaySetCards({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [position, setPosition] = useState(0);
   const scrollPosRef = useRef(0);
+  const [setName, setSetName] = useState("");
   const supertypes: string[] = useMemo(() => {
     return ["Pokémon", "Trainer", "Energy"];
   }, []);
@@ -33,7 +34,10 @@ export default function DisplaySetCards({
         let url1 = `https://api.pokemontcg.io/v2/cards?q=set.id:${id}&pageSize=250&page=1`;
         let url2 = `https://api.pokemontcg.io/v2/cards?q=set.id:${id}&pageSize=250&page=2`;
         let urls = [url1, url2];
-
+        const setRes = await fetch(`https://api.pokemontcg.io/v2/sets/${id}`);
+        const set = await setRes.json();
+        setSetName(set.data.name);
+        console.log(set);
         const responses = await Promise.all(urls.map((url) => fetch(url)));
         const data = await Promise.all(responses.map((resp) => resp.json()));
         const allCards = [...data[0].data, ...data[1].data];
@@ -49,7 +53,6 @@ export default function DisplaySetCards({
         console.error("Error fetching cards:", error);
       }
     }
-
     fetchCards();
   }, [id]);
 
@@ -186,6 +189,7 @@ export default function DisplaySetCards({
       ) : (
         <>
           <div className={`${curCard ? "hidden" : ""} overflow-y-hidden`}>
+            <div className="flex justify-center text-2xl text-black font-bold py-1">{setName}</div>
             <div className="flex justify-center gap-6 sm:gap-4 xs:gap-4 text-black">
               {DisplayOptions}
             </div>
