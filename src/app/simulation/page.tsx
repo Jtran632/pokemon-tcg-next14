@@ -125,7 +125,7 @@ export default function Simulation() {
       return array;
     }
     console.log([...commonPick, ...uncommonPick, ...reversePick, ...rarePick]);
-    console.log(cardRarities.rarePlus)
+    console.log(cardRarities.rarePlus);
     const randomizedPack: ICardData[] = shuffleArray([
       ...commonPick,
       ...uncommonPick,
@@ -140,10 +140,9 @@ export default function Simulation() {
     const newIsRevealed = [...IsRevealed];
     newIsRevealed[index] = true;
     setIsRevealed(newIsRevealed);
-
   };
   return (
-    <div className="flex flex-col min-h-screen text-black items-center text-xs bg-white pt-2">
+    <div className="flex flex-col min-h-screen text-black items-center text-[10px] bg-white pt-2 px-40">
       {curCard !== null && (
         <DisplayCardInfoModal
           card={curCard}
@@ -151,21 +150,21 @@ export default function Simulation() {
         ></DisplayCardInfoModal>
       )}
       <div className={`${curCard === null ? "flex flex-col" : "hidden"}`}>
-        <div className={`flex justify-center`}>
+        <div className={`flex justify-center items-center`}>
           <SetDropdown setCurSet={setCurSet} setPack={setPack} />
           {!loading && cards.length > 0 && curSet != "" ? (
-            <div className="flex justify-center gap-1">
+            <div className="flex justify-center items-center gap-1">
               <button
-                className=" w-fit border border-green-500 bg-green-300 rounded-lg py-1 px-2"
+                className=" w-fit border border-green-500 bg-green-300 rounded-lg p-1"
                 onClick={() => handlePackOpen(false)}
               >
-                Open Pack
+                Pack
               </button>
               <button
-                className=" w-fit border border-red-500 bg-red-300 rounded-lg py-1 px-2"
+                className=" w-fit border border-red-500 bg-red-300 rounded-lg p-1"
                 onClick={() => handlePackOpen(true)}
               >
-                Open Box
+                Box
               </button>
               <div className="flex items-center">
                 Packs Opened: {packsOpened}
@@ -203,13 +202,14 @@ export default function Simulation() {
                 {pack.map((i: ICardData, index: number) => (
                   <div
                     key={index}
-                    className="relative w-[240px] h-[340px] hover:scale-105"
+                    className="relative hover:scale-105"
                     onMouseOver={() => handleRevealCard(index)}
                     onClick={() => setCurCard(i)}
                   >
                     <img
                       src={IsRevealed[index] ? i.images.large : "/backCard.png"}
                       alt={i.name}
+                      width={400}
                       className={`flex flex-col w-full h-full ${
                         IsRevealed[index] &&
                         `${
@@ -237,6 +237,7 @@ export default function Simulation() {
                       i.rarity.toLowerCase() !== "rare" &&
                       IsRevealed[index] && (
                         <img
+                          width={400}
                           className="absolute top-0 mix-blend-color-dodge brightness-100 contrast-150 w-full h-full rounded-3xl"
                           src="https://i.gifer.com/IrF.gif"
                         ></img>
