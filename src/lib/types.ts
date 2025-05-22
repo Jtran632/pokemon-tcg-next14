@@ -16,7 +16,12 @@ export interface ICardData {
   number: string;
   rarity: string;
 }
-
+export interface ICardRarities {
+  common: ICardData[];
+  uncommon: ICardData[];
+  rare: ICardData[];
+  rarePlus: ICardData[];
+}
 export interface IFavCard {
   id?: number;
   cardId?: string | null;

@@ -6,9 +6,11 @@ import { Dispatch, use, useEffect, useState } from "react";
 import { set } from "zod";
 export default function SetDropdown({
   setCurSet,
-  setPack
+  setCurSetName,
+  setPack,
 }: {
   setCurSet: Dispatch<React.SetStateAction<string>>;
+  setCurSetName: Dispatch<React.SetStateAction<string>>;
   setPack: Dispatch<React.SetStateAction<ICardData[]>>;
 }) {
   const [tcgSets, setTcgSets] = useState<ItcgSetData[]>([]);
@@ -30,12 +32,14 @@ export default function SetDropdown({
       {tcgSetsByDate.length > 0 && (
         <select
           className="bg-white border-2 border-blue-200 rounded-md focus:ring-blue-200 focus:border-blue-300 p-2 text-black"
-          onChange={(e) => [setCurSet(e.target.value), setPack([])]}
+          onChange={(e) => [setCurSet(e.target.value), setCurSetName(e.target.selectedOptions[0].text), setPack([])]}
         >
           <option value={""}></option>
           {tcgSetsByDate.map((setItem: any) => (
             <option key={setItem.id} value={setItem.id}>
-              {setItem.series}{' - '}{setItem.name}
+              {setItem.series}
+              {" - "}
+              {setItem.name}
             </option>
           ))}
         </select>
