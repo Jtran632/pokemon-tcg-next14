@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { ICardData } from "@/lib/types";
 import { JSX } from "react";
 
-export default function DisplayCardInfo({ card }: any) {
+export default function DisplayCardInfo({ card }: { card: ICardData }) {
   function GetTCGPlayerPrices() {
     let p = card?.tcgplayer?.prices;
     let k = Object.keys(p);

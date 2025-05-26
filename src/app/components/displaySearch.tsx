@@ -4,14 +4,14 @@ import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { addFav, delFav } from "@/lib/actions";
 import { useSession } from "next-auth/react";
-import { ICardData } from "@/lib/types";
+import { ICardData, IFavs } from "@/lib/types";
 import { motion } from "framer-motion";
 import DisplayCardInfoModal from "./displayCardInfoModal";
 export const dynamic = "force-dynamic";
-export default function DisplaySearch({ favs }: any) {
+export default function DisplaySearch({ favs }: IFavs) {
   const session = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [cards, setCards] = useState<any[]>([]);
+  const [cards, setCards] = useState<ICardData[]>([]);
   const [query, setQuery] = useState("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const router = useRouter();

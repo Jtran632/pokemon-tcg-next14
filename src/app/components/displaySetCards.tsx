@@ -102,6 +102,16 @@ export default function DisplaySetCards({
     [isFavorite, router, session?.data?.user]
   );
   const DisplaySetCards = useMemo(() => {
+    const DisplayValue = (card: ICardData) => {
+      return (
+        <>
+          {card.tcgplayer?.prices &&
+            Object.values(card.tcgplayer.prices).length > 0 && (
+              <div>${Object.values(card.tcgplayer.prices)[0].market}</div>
+            )}
+        </>
+      );
+    };
     return (
       <div className="grid grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 gap-2 px-20 lg:px-8 md:px-6 sm:px-4 xs:px-0">
         {cards
@@ -126,11 +136,17 @@ export default function DisplaySetCards({
                   <div>
                     {card.number}/{card.set.total}
                   </div>
-                  {session?.data?.user && (
-                    <button onClick={() => handleFavorite(card)}>
-                      {isFavorite(card) ? "❤️" : "🤍"}
-                    </button>
-                  )}
+                  <div className="flex gap-1">
+                    {!session?.data?.user && <DisplayValue {...card} />}
+                    {session?.data?.user && (
+                      <>
+                        <DisplayValue {...card} />
+                        <button onClick={() => handleFavorite(card)}>
+                          {isFavorite(card) ? "❤️" : "🤍"}
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </div>
                 <div className="bg-black rounded-full rounded-t-none">
                   <img
@@ -189,7 +205,9 @@ export default function DisplaySetCards({
       ) : (
         <>
           <div className={`${curCard ? "hidden" : ""} overflow-y-hidden`}>
-            <div className="flex justify-center text-2xl text-black font-bold py-1">{setName}</div>
+            <div className="flex justify-center text-2xl text-black font-bold py-1">
+              {setName}
+            </div>
             <div className="flex justify-center gap-6 sm:gap-4 xs:gap-4 text-black">
               {DisplayOptions}
             </div>

@@ -4,10 +4,10 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { delFav } from "@/lib/actions";
-import { IFavCard } from "@/lib/types";
+import { IFavCard, IFavs } from "@/lib/types";
 import { useSession } from "next-auth/react";
 
-export default function DisplayFavs({ favs }: any) {
+export default function DisplayFavs({ favs }: IFavs) {
   const router = useRouter();
   const session = useSession();
   function CreateCard({ card }: { card: IFavCard }) {

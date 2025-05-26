@@ -2,6 +2,7 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import {
   DefaultSession,
   getServerSession,
+  Session,
   type NextAuthOptions,
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
@@ -10,7 +11,16 @@ import { z } from "zod";
 import { db } from "@/server";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-async function fetchUser(email: string): Promise<any | null> {
+async function fetchUser(
+  email: string
+): Promise<{
+  id: string;
+  email: string;
+  name: string | null;
+  password: string | null;
+  image: string | null;
+  emailVerified: boolean | null;
+} | null> {
   try {
     const userResponse = await db
       .select()
@@ -66,7 +76,7 @@ export const authOptions: NextAuthOptions = {
       token,
       user,
     }: {
-      session: any;
+      session: Session;
       token: any;
       user: {
         name?: string | null | undefined;
@@ -143,4 +153,5 @@ export const authOptions: NextAuthOptions = {
   ],
 };
 
-export const getServerAuthSession = () => getServerSession(authOptions);
+export const getServerAuthSession = () =>
+  getServerSession(authOptions) as Promise<Session | null>;

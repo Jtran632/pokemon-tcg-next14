@@ -2,6 +2,7 @@ import DisplayFavs from "@/app/components/displayFavs";
 import { getFavs } from "@/lib/actions";
 import { getServerAuthSession } from "../../../auth";
 import z from "zod";
+import { Session } from "next-auth";
 export const dynamic = "force-dynamic";
 
 export default async function Collection() {
@@ -15,7 +16,7 @@ export default async function Collection() {
   );
   type Favs = z.infer<typeof favsSchema>;
 
-  const session = await getServerAuthSession();
+  const session: Session | null = await getServerAuthSession();
   let favs: Favs = [];
   if (session) {
     const userId = session.user.id;

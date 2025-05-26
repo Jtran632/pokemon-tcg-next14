@@ -1,10 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { ICardData } from "@/lib/types";
 import Link from "next/link";
 import { JSX, useEffect } from "react";
 
-export default function DisplayCardInfoModal({ card, setCurCard }: any) {
+export default function DisplayCardInfoModal({
+  card,
+  setCurCard,
+}: {
+  card: ICardData;
+  setCurCard: React.Dispatch<React.SetStateAction<ICardData | null>>;
+}) {
   useEffect(() => {
     scrollTo(0, 0);
   });

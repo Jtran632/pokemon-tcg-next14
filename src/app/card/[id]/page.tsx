@@ -16,7 +16,7 @@ export default async function SetPageWithCardName({ params }: {params: Promise<{
 
   // Fetch card data from the API
   const cardData = await getCard(id);
-
+  
   return (
     <div>
       <DisplayCardInfo card={cardData.data} />

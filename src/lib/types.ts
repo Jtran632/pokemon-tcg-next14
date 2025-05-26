@@ -15,6 +15,22 @@ export interface ICardData {
   name: string;
   number: string;
   rarity: string;
+  cardmarket: {
+    url: string | undefined;
+    prices: any;
+  };
+  tcgplayer: {
+    prices: {
+      [key: string]: {
+        low: number;
+        mid: number;
+        high: number;
+        market: number;
+        directLow: number | null;
+      };
+    };
+    url: string | undefined;
+  };
 }
 export interface ICardRarities {
   common: ICardData[];
@@ -47,4 +63,13 @@ export interface ItcgSet {
   tcgSets: {
     data: ItcgSetData[];
   };
+}
+
+export interface IFavs {
+  favs: {
+    id: number;
+    cardId: string | null;
+    imageUrl: string | null;
+    userId: string | null;
+  }[];
 }

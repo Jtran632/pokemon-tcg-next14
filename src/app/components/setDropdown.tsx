@@ -32,10 +32,14 @@ export default function SetDropdown({
       {tcgSetsByDate.length > 0 && (
         <select
           className="bg-white border-2 border-blue-200 rounded-md focus:ring-blue-200 focus:border-blue-300 p-2 text-black"
-          onChange={(e) => [setCurSet(e.target.value), setCurSetName(e.target.selectedOptions[0].text), setPack([])]}
+          onChange={(e) => [
+            setCurSet(e.target.value),
+            setCurSetName(e.target.selectedOptions[0].text),
+            setPack([]),
+          ]}
         >
           <option value={""}></option>
-          {tcgSetsByDate.map((setItem: any) => (
+          {tcgSetsByDate.map((setItem: ItcgSetData) => (
             <option key={setItem.id} value={setItem.id}>
               {setItem.series}
               {" - "}
